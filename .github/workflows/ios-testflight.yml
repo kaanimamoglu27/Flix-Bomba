@@ -55,6 +55,14 @@ jobs:
           PLIST=ios/App/App/Info.plist
           /usr/libexec/PlistBuddy -c 'Set :CFBundleDisplayName FLIX Bomb' "$PLIST" || /usr/libexec/PlistBuddy -c 'Add :CFBundleDisplayName string FLIX Bomb' "$PLIST"
           /usr/libexec/PlistBuddy -c 'Set :CFBundleName FLIX Bomb' "$PLIST" || /usr/libexec/PlistBuddy -c 'Add :CFBundleName string FLIX Bomb' "$PLIST"
+          # Portrait only (the game is designed for portrait), full screen, no custom encryption
+          PB=/usr/libexec/PlistBuddy
+          $PB -c 'Delete :UISupportedInterfaceOrientations' "$PLIST" || true
+          $PB -c 'Add :UISupportedInterfaceOrientations array' "$PLIST"
+          $PB -c 'Add :UISupportedInterfaceOrientations:0 string UIInterfaceOrientationPortrait' "$PLIST"
+          $PB -c 'Delete :UISupportedInterfaceOrientations~ipad' "$PLIST" || true
+          $PB -c 'Set :UIRequiresFullScreen true' "$PLIST" || $PB -c 'Add :UIRequiresFullScreen bool true' "$PLIST"
+          $PB -c 'Set :ITSAppUsesNonExemptEncryption false' "$PLIST" || $PB -c 'Add :ITSAppUsesNonExemptEncryption bool false' "$PLIST"
       - name: Import existing Apple Distribution identity and profile
         env:
           CERT: ${{ secrets.IOS_DIST_CERT_PEM }}
@@ -99,6 +107,7 @@ jobs:
               c.build_settings["PROVISIONING_PROFILE_SPECIFIER"] = ENV.fetch("PROFILE_UUID")
               c.build_settings["MARKETING_VERSION"] = ENV.fetch("APP_VERSION")
               c.build_settings["CURRENT_PROJECT_VERSION"] = ENV.fetch("BUILD_NUMBER")
+              c.build_settings["TARGETED_DEVICE_FAMILY"] = "1"
             end
             p.save
           '
