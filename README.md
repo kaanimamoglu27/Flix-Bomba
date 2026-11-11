@@ -1,16 +1,17 @@
-# Flix Kart v4 (2026-11-10) — araç hissi
-Yeni araç fiziği: 4 tekerlekli yay/amortisör süspansiyonu, momentumlu kayma (lastik tutuşu), gaz/fren/virajda ağırlık aktarımı, yokuşta yerçekimi, havada denge, inişte kısa kayma. SergeyMakeev/ArcadeCarPhysics (MIT, Copyright 2018 Sergey Makeev) ArcadeCar.cs'den uyarlandı.
-Pistler artık iniş çıkışlı: tepeler, içe yatık virajlar, düzlüklerde tümsekler ve gerçek rampalar (havada DRİFT = numara + turbo). Yol yükseltilmiş, yanlarında duvar var. Kamera yaylı takip eder ve yokuşa bakar.
-Önceki sürüm: flix-kart-v3.html.
+# Flix Bomba (v1.2)
+3D bomba-labirent oyunu. Tek dosya: `index.html` (kaynaklar `kaynak/`). Önceki sürümler: `v11.html`, `v1.html`.
 
-## v3 (2026-11-10)
-Kariyer: 5 dünya (Mutfak, Oyun Odası, Arka Bahçe, Banyo, FLIX Fabrikası) × 4 etkinlik (yarış, ters pist, zamana karşı, patron düellosu), 60 yıldız.
-Güç kutuları (Üçlü Turbo, Tüy Füzesi, FLIX Topu, Sakız, Kalkan, Altın FLIX, Şimşek) ve sürücüye özel süper güçler; atlama rampası + havada numara.
-Garaj: 5 araç (Klasik, Plaj Buggy, Canavar, Roket, Tüy Jet) + hız/hızlanma/yol tutuş yükseltmeleri. Eşya dağılımı sıraya göre (super-kart-3djs PowerUp.js fikri, MIT).
-Önceki sürümler: flix-kart-v2.html, flix-kart-v1.html.
+Modlar: Macera (20 bölüm: canavarları patlat, gizli kapıyı bul, çık), Arena (4 kişilik maç), Bulmaca (12 bölüm, sınırlı bomba), Online (hızlı eşleşme ya da oda koduyla 2-4 kişi).
+Online yalnızca oyunun claude.ai bağlantısında çalışır (sayfanın canlı oda özelliğini kullanır). Hızlı eşleşmede 10 saniye içinde kimse gelmezse maç bilgisayar oyuncularıyla başlar.
 
-## v2 (2026-11-09)
-Tek dosya oyun: flix-kart.html (v1: flix-kart-v1.html). Kaynak: kaynak/ (build.py ../shared/toy.js ve logo_s.webp bekler).
-Sürücüler: Flix (ARKANA kahraman modeli), Usta Wu, Kick, Flick (Usta Wu serisi modelleri), Buzul Flix, Neon Flix.
-Ses ve müzik: fecolinhares/super-kart-3djs (MIT, Copyright (c) 2026 Feco Linhares) sfx.js + music.js, motor sesi ve ana kanal AudioManager.js'ten uyarlandı.
-Sürüş hissi pmndrs/racing-game (MIT, Copyright (c) 2021 pmndrs) Vehicle.tsx'ten; drift seviyeleri (mavi/turuncu/mor), zıplama, süper start, savrulma izleri, kamera sarsıntısı, hız çizgileri.
+v1.2: Türkçe/İngilizce, profil (isim, seviye, istatistik), avatar özelleştirme (yüz, zemin, çerçeve, rozet), tüy ekonomisi, 7 günlük ödül, mağaza (tüy paketleri `bomba_tuy_*`, `bomba_noads`; web'de deneme), ödüllü ve geçiş reklam bağlantıları (`window.FlixAds`, web'de Flix tanıtım kartı), maç öncesi rakip ekranı.
+
+## Derleme
+`kaynak/` içinde: `python3 patch12.py` (game_v11.js + meta.js + ui12.js -> game.js, shell_v11.html + css12.css + body12.html -> shell.html), sonra `python3 build.py`.
+
+- `kaynak/chars.js`: karakter modelleri ve özellikleri (Flix, Usta Wu, Kick, Flick, Buzul Flix).
+- `kaynak/world.js`: ada haritası, bloklar, bomba, patlama, güçler, canavarlar, kapı.
+- `kaynak/meta.js`: dil, profil, seviye, avatar, bilgisayar oyuncuları, eşleşme ekranı, reklam, mağaza, günlük ödül.
+- `kaynak/ui12.js`: arayüz ve düğmeler. `kaynak/game_v11.js`: oyun mantığı, botlar, online (`NET`). Test: `window.__fb`.
+- `kaynak/puzgen.js`: bulmaca üretici ve çözücü.
+- Izgara kuralları ve bot döngüsü MattSkala/html5-bombergirl (MIT) temel alınarak yeniden yazıldı. Müzik motoru: fecolinhares/super-kart-3djs (MIT).

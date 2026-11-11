@@ -1,8 +1,10 @@
 import base64,os,re,sys
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
+VER='1.2'
 def strip(s): return re.sub(r'^export ','',s,flags=re.M)
-toy='\n'.join(l for l in open('../shared/toy.js').read().split('\n') if not l.startswith('let THREE;') and not l.startswith('//'))
-logo='data:image/webp;base64,'+base64.b64encode(open('../shared/logo_s.webp','rb').read()).decode()
-h=open('shell.html').read().replace('@@BASE@@',open('base.css').read()).replace('@@LOGO@@',logo).replace('@@TOY@@',strip(toy)).replace('@@TRACKS@@',strip(open('tracks.js').read())).replace('@@RACE@@',strip(open('race.js').read())).replace('@@DRIVERS@@',strip(open('drivers.js').read())).replace('@@SFX@@','const { renderSfx, engineGear } = (() => {\n'+strip(open('sfx.js').read())+'\nreturn { renderSfx, engineGear };\n})();').replace('@@MUSIC@@','const { MusicEngine } = (() => {\n'+strip(open('music.js').read()).replace('export { TRACKS };','')+'\nreturn { MusicEngine };\n})();').replace('@@AUDIO@@',strip(open('audio.js').read())).replace('@@GAME@@',open('game.js').read()+'\n'+open('items.js').read())
-out=sys.argv[1] if len(sys.argv)>1 else 'flix-kart.html'
+logo='data:image/webp;base64,'+base64.b64encode(open('logo_s.webp','rb').read()).decode()
+h=open('shell.html').read()
+rep={'@@INTRO@@':open('intro.html').read(),'@@LOGO@@':logo,'@@LEGAL@@':open('flix-legal.js').read(),'@@MUSIC@@':strip(open('music.js').read()).replace('{ TRACKS };',''),'@@CHARS@@':open('chars.js').read(),'@@WORLD@@':open('world.js').read(),'@@GAME@@':open('game.js').read(),'@@VER@@':VER}
+for k in ['@@INTRO@@','@@LOGO@@','@@LEGAL@@','@@MUSIC@@','@@CHARS@@','@@WORLD@@','@@GAME@@','@@VER@@']: h=h.replace(k,rep[k])
+out=sys.argv[1] if len(sys.argv)>1 else 'flix-bomba.html'
 open(out,'w').write(h); print(out,len(h))
