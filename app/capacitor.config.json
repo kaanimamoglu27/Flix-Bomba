@@ -1,0 +1,10 @@
+{
+  "appId": "com.flixtoys.bomba",
+  "appName": "FLIX Bomb",
+  "webDir": "www",
+  "ios": {
+    "contentInset": "never",
+    "scrollEnabled": false,
+    "preferredContentMode": "mobile"
+  }
+}
