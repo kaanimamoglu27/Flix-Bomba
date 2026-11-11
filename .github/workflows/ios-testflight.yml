@@ -43,7 +43,8 @@ jobs:
         run: |
           npm install --no-audit --no-fund
           mkdir -p www
-          cp ../index.html www/index.html
+          python3 ../kaynak/build.py "$PWD/www/index.html"
+          grep -q 'flix-bomb-terms-of-service-kullanim-sartlari' www/index.html
           npx cap add ios --packagemanager CocoaPods
       - name: Install FLIX Bomb icon and display name
         run: |
