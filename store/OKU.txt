@@ -1,0 +1,10 @@
+Flix Bomba - App Store görsel seti (v1.3, 2026-11-11)
+
+icon-1024.png            App ikonu (1024x1024, şeffaflık yok). Diğer renkler: ikon_secenekleri/
+iphone_6.9_1290x2796/    8 görsel, tr_1..8 ve en_1..8 (App Store Connect 6.9 inç alanı)
+iphone_6.5_1242x2688/    Aynı 8 görsel, 6.5 inç alanı için (JPG, App Store kabul eder)
+onizleme_tr.jpg / onizleme_en.jpg   Hepsinin küçük önizlemesi
+kaynak/                  Görselleri üreten betikler (cap.js oyundan ekran alır, comp.js çerçeveler)
+
+Sıra: 1 kapak, 2 Arena, 3 haritalar, 4 Macera bölümleri, 5 skinler, 6 Online, 7 Bulmaca, 8 Macera oynanış.
+Ekranlar oyunun gerçek görüntüleridir. Oyun sadece dikey ve iPhone içindir, iPad görseli yoktur.
