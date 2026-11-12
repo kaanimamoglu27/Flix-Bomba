@@ -1,0 +1,20 @@
+name: Page build check
+on:
+  push:
+    branches: [main]
+    paths: ['kaynak/**', 'index.html', '.github/workflows/build-check.yml']
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the page the same way the iOS workflow does and verify it
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          python3 kaynak/build.py "$PWD/out/index.html"
+          python3 kaynak/check_page.py out/index.html
+          cmp out/index.html index.html || { echo "::error::index.html is not the current build output. Run python3 kaynak/build.py index.html and commit."; exit 1; }

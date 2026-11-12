@@ -45,10 +45,6 @@ jobs:
           mkdir -p www
           python3 ../kaynak/build.py "$PWD/www/index.html"
           grep -q 'flix-bomb-terms-of-service-kullanim-sartlari' www/index.html
-          # the page must be the complete standalone document (viewport + UTF-8, no CDN), otherwise the UI breaks on device
-          grep -q '<meta name="viewport"' www/index.html
-          grep -q '<meta charset="utf-8">' www/index.html
-          ! grep -q 'cdn.jsdelivr.net' www/index.html
           npx cap add ios --packagemanager CocoaPods
       - name: Install FLIX Bomb icon and display name
         run: |
