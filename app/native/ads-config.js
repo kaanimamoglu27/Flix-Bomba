@@ -6,9 +6,9 @@
 window.FLIX_ADS_CONFIG = {
   forceTestAds: false,
   ids: {
-    IOS_APP_ID: '',        // ca-app-pub-XXXXXXXXXXXXXXXX~XXXXXXXXXX
-    IOS_REWARDED: '',      // rewarded: +60 feathers in the shop (5 a day), daily reward x2
-    IOS_INTERSTITIAL: '',  // interstitial: after every 3rd finished game
+    IOS_APP_ID: 'ca-app-pub-9939733946730095~9296380320',        // ca-app-pub-XXXXXXXXXXXXXXXX~XXXXXXXXXX
+    IOS_REWARDED: 'ca-app-pub-9939733946730095/6530616184',      // rewarded: +60 feathers in the shop (5 a day), daily reward x2
+    IOS_INTERSTITIAL: 'ca-app-pub-9939733946730095/5109723304',  // interstitial: after every 3rd finished game
     IOS_BANNER: '',
     ANDROID_REWARDED: '',
     ANDROID_INTERSTITIAL: '',
