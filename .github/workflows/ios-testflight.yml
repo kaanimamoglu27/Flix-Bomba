@@ -45,7 +45,9 @@ jobs:
           mkdir -p www
           python3 ../kaynak/build.py "$PWD/www/index.html"
           grep -q 'flix-bomb-terms-of-service-kullanim-sartlari' www/index.html
+          python3 tools/app_scripts.py   # AdMob, App Store purchases, privacy options, online (app only)
           npx cap add ios --packagemanager CocoaPods
+          python3 tools/ios_admob.py     # Info.plist: AdMob app id, tracking text, SKAdNetwork
       - name: Install FLIX Bomb icon and display name
         run: |
           set -euo pipefail
