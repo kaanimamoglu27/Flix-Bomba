@@ -6,7 +6,7 @@ on:
       version:
         description: App Store version (e.g. 1.0)
         required: true
-        default: '1.0'
+        default: '1.1'
 
 permissions:
   contents: read
@@ -40,6 +40,11 @@ jobs:
             if [ -z "${!var}" ]; then echo "::error::Missing secret: $var"; exit 1; fi
           done
       - name: Install and prepare iOS
+        env:
+          # Gerçek AdMob kimlikleri (Settings > Secrets > Actions). Boşsa native/ads-config.js'teki kimlikler, o da boşsa Google test reklamı.
+          ADMOB_APP_ID: ${{ secrets.BOMBA_ADMOB_APP_ID }}
+          ADMOB_REWARDED_ID: ${{ secrets.BOMBA_ADMOB_REWARDED_ID }}
+          ADMOB_INTERSTITIAL_ID: ${{ secrets.BOMBA_ADMOB_INTERSTITIAL_ID }}
         run: |
           npm install --no-audit --no-fund
           mkdir -p www
@@ -48,6 +53,7 @@ jobs:
           python3 tools/app_scripts.py   # AdMob, App Store purchases, privacy options, online (app only)
           npx cap add ios --packagemanager CocoaPods
           python3 tools/ios_admob.py     # Info.plist: AdMob app id, tracking text, SKAdNetwork
+          python3 tools/ads_audit.py     # Reklam kontrolü: gerçek/test kimlikler run özetine yazılır
       - name: Install FLIX Bomb icon and display name
         run: |
           set -euo pipefail
