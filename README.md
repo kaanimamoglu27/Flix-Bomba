@@ -1,4 +1,6 @@
 # Flix Bomba (v1.3)
+
+**Satın alma düzeltmesi (2026-11-17):** ödeme ekranı açılır açılmaz kalıcı ürün veriliyordu, ödemeyi kapatsan bile kalıyordu. cordova-plugin-purchase ödeme ekranı açıkken geçici bir "virtual" işlem oluşturuyor ve `store.owned()` onu sahip olunmuş sayıyor. `native-bridge.js` artık sadece gerçek, onaylanmış ya da bitmiş işlemlere bakıyor (`realOwned`).
 3D bomba-labirent oyunu. Tek dosya: `index.html` (kaynaklar `kaynak/`). Önceki sürümler: `v14.html`, `v131.html`, `v12.html`, `v11.html`, `v1.html`. App Store görselleri ve ikon: `store/`. iOS paketi: `app/` (Capacitor, kök `index.html` ve `store/icon-1024.png` dosyalarını kullanır).
 
 Modlar: Macera (5 harita x 25 = 125 bölüm: canavarları patlat, gizli kapıyı bul, çık), Arena (4 kişilik maç), Bulmaca (12 bölüm, sınırlı bomba), Online (hızlı eşleşme ya da oda koduyla 2-4 kişi).
