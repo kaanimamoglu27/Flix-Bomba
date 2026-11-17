@@ -4,7 +4,7 @@
 import base64,os,re,sys
 out=os.path.abspath(sys.argv[1]) if len(sys.argv)>1 else None
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
-VER='1.4.1'
+VER='1.3'
 def rd(f): return open(f,encoding='utf-8').read()
 def strip(s): return re.sub(r'^export ','',s,flags=re.M)
 def safe(js): return js.replace('</script','<\\/script').replace('<!--','<\\!--')

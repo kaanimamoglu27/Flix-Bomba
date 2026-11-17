@@ -9,5 +9,6 @@ if 'name="viewport"' not in head or 'viewport-fit=cover' not in head: bad.append
 if 'cdn.jsdelivr.net' in s or 'fonts.googleapis.com' in s: bad.append('still loads from the network')
 if '__T3' not in s: bad.append('three.js not inlined')
 if 'safe-area-inset-top' not in s: bad.append('no safe-area padding')
+if 'U+011E-011F, U+0130, U+015E-015F' not in s: bad.append('display font without the Turkish letters (fonts.css must be the one built by mkfont.py)')
 if bad: print('PAGE CHECK FAILED: '+'; '.join(bad)); sys.exit(1)
 print('page ok',len(b),'bytes')
