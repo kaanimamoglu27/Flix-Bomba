@@ -72,6 +72,9 @@ jobs:
           $PB -c 'Delete :UISupportedInterfaceOrientations~ipad' "$PLIST" || true
           $PB -c 'Set :UIRequiresFullScreen true' "$PLIST" || $PB -c 'Add :UIRequiresFullScreen bool true' "$PLIST"
           $PB -c 'Set :ITSAppUsesNonExemptEncryption false' "$PLIST" || $PB -c 'Add :ITSAppUsesNonExemptEncryption bool false' "$PLIST"
+          # status bar hidden like the other FLIX games (no @capacitor/status-bar plugin here)
+          $PB -c 'Set :UIStatusBarHidden true' "$PLIST" || $PB -c 'Add :UIStatusBarHidden bool true' "$PLIST"
+          $PB -c 'Set :UIViewControllerBasedStatusBarAppearance false' "$PLIST" || $PB -c 'Add :UIViewControllerBasedStatusBarAppearance bool false' "$PLIST"
       - name: Import existing Apple Distribution identity and profile
         env:
           CERT: ${{ secrets.IOS_DIST_CERT_PEM }}
