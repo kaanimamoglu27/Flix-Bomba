@@ -10,14 +10,14 @@ const save = () => { try { localStorage.setItem(SAVE_KEY, JSON.stringify(SV)); }
 // ===== v1.2: language, profile, feathers, avatars, opponents, ads, shop =====
 { const d = { lang: null, name: '', av: null, xp: 0, tuy: 150, own: null, bgs: [0, 1, 2], frs: [0], sts: [0], day: { last: '', n: 0 }, tip: {}, noads: 0, tx: [], adDay: '', adN: 0, played: 0 };
   for (const k in d) if (SV[k] === undefined || SV[k] === null) SV[k] = d[k]; }
-if (SV.lang !== 'tr' && SV.lang !== 'en') SV.lang = (navigator.language || 'tr').toLowerCase().startsWith('tr') ? 'tr' : 'en';
+if (SV.lang !== 'tr' && SV.lang !== 'en') SV.lang = 'tr'; // Turkish is the default on every device; other languages come from Settings (FLIX i18n)
 if (!Array.isArray(SV.own)) SV.own = [...new Set(['flix', 'kick', SV.char])];
 if (!SV.own.includes(SV.char)) SV.char = 'flix';
 if (!SV.av) SV.av = { f: SV.char, bg: 0, fr: 0, st: 0 };
 if (!SV.name) SV.name = (SV.lang === 'en' ? 'Player' : 'Oyuncu') + (1000 + Math.floor(Math.random() * 9000));
-const T = (tr, en) => (SV.lang === 'en' ? en : tr);
+const T = (tr, en) => (SV.lang === 'en' ? en : window.FlixI18n && FlixI18n.lang !== 'tr' && FlixI18n.lang !== 'en' ? FlixI18n.t(tr) : tr);
 const escH = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const fmtN = (n) => Math.round(n).toLocaleString(SV.lang === 'en' ? 'en-US' : 'tr-TR');
+const fmtN = (n) => Math.round(n).toLocaleString(SV.lang === 'en' ? 'en-US' : window.FlixI18n && FlixI18n.lang !== 'tr' && FlixI18n.lang !== 'ar' ? FlixI18n.lang : 'tr-TR');
 const rndI = (n) => Math.floor(Math.random() * n);
 const shufA = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = rndI(i + 1); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const CH_EN = {
@@ -93,7 +93,14 @@ function webAd(kind) {
     c.onclick = () => { if (c.disabled) return; sheet('adL', false); res(true); }; });
 }
 async function adRewarded() { let ok; if (window.FlixAds) ok = (await window.FlixAds.showRewarded(5000)) === 'rewarded'; else if (NATIVE) ok = false; else ok = await webAd('rewarded'); if (ok) lastRewardAt = Date.now(); return ok; }
-async function adInter() { if (SV.noads || Date.now() - lastRewardAt < 90000) return false; if (window.FlixAds) return window.FlixAds.showInterstitial(); if (NATIVE) return false; return webAd('inter'); }
+// interstitial between matches only (maybeInter): every 3rd finished game, never within 90 s of a rewarded ad,
+// and at least 2 minutes apart (also after launch), like the other FLIX games
+let lastInterAt = Date.now();
+async function adInter() {
+  if (SV.noads || Date.now() - lastRewardAt < 90000 || Date.now() - lastInterAt < 120000) return false;
+  const r = window.FlixAds ? await window.FlixAds.showInterstitial() : NATIVE ? false : await webAd('inter');
+  if (r) lastInterAt = Date.now(); return r;
+}
 async function maybeInter() { SV.played++; save(); if (SV.played % 3 === 0) await adInter(); }
 const adScreen = (n) => { if (window.FlixAds) window.FlixAds.setScreen(n); };
 if (SV.noads && window.FlixAds) window.FlixAds.setAdsRemoved(true);
@@ -135,7 +142,7 @@ function renderDaily() {
 
 // first-time goal cards
 const TIPS = {
-  macera: () => [T('Macera: ne yapacağım?', 'Adventure: what do I do?'), [T('👾 Canavarları bombayla patlat. Onlara dokunursan yanarsın.', '👾 Blast the monsters with bombs. Touching one knocks you out.'), T('🧱 Tuğlaları kır. Birinin altında gizli kapı var.', '🧱 Break the bricks. A hidden door is under one of them.'), T('🚪 Bütün canavarlar bitince kapı açılır. Kapıya gir, bölüm biter.', '🚪 When every monster is gone the door opens. Walk in to finish the level.'), T('⏱ Süre dolmadan bitir. 20 bölüm var, gittikçe zorlaşır.', '⏱ Beat the clock. There are 20 levels and they get harder.')]],
+  macera: () => [T('Macera: ne yapacağım?', 'Adventure: what do I do?'), [T('👾 Canavarları bombayla patlat. Onlara dokunursan yanarsın.', '👾 Blast the monsters with bombs. Touching one knocks you out.'), T('🧱 Tuğlaları kır. Birinin altında gizli kapı var.', '🧱 Break the bricks. A hidden door is under one of them.'), T('🚪 Bütün canavarlar bitince kapı açılır. Kapıya gir, bölüm biter.', '🚪 When every monster is gone the door opens. Walk in to finish the level.'), T('⏱ Süre dolmadan bitir. Her haritada 25 bölüm var, gittikçe zorlaşır.', '⏱ Beat the clock. Every map has 25 levels and they get harder.')]],
   arena: () => [T('Arena: ne yapacağım?', 'Arena: what do I do?'), [T('💣 4 oyuncu aynı alanda. Bombanla rakiplerini sıkıştır.', '💣 4 players, one arena. Trap your rivals with bombs.'), T('🏁 Son ayakta kalan raundu alır.', '🏁 Last one standing takes the round.'), T('🏆 3 raunt alan maçı kazanır.', '🏆 First to 3 rounds wins the match.'), T('⏱ 2 dakika sonra alan kenarlardan daralır.', '⏱ After 2 minutes the arena starts closing in.')]],
   bulmaca: () => [T('Bulmaca: ne yapacağım?', 'Puzzle: what do I do?'), [T('⭐ Hedef: bütün altın kasaları patlatmak.', '⭐ Goal: blow up every gold crate.'), T('💣 Bomban sayılı. Nereye koyacağını düşün.', '💣 You only get a few bombs. Think where to put them.'), T('🟣 Mor bombalar uyur. Bir patlama değince onlar da patlar.', '🟣 Purple bombs sleep. A blast that touches one sets it off.'), T('🧠 Süre yok, acele etme.', '🧠 No timer, take your time.')]],
 };
@@ -728,7 +735,7 @@ function renderHome() {
   $('tuyN').textContent = fmtN(SV.tuy); $('dayBtn').classList.toggle('dot', dailyState().can);
   $('mMac').textContent = (SV.mac || 0) >= MAC_LEVELS ? T('Hepsi tamam · ', 'All done · ') + MAC_LEVELS + T(' bölüm', ' levels') : T('Bölüm ', 'Level ') + ((SV.mac || 0) + 1) + ' / ' + MAC_LEVELS + T(' · canavarları patlat, kapıyı bul, çık', ' · blast monsters, find the door, exit');
   $('mBul').textContent = (SV.bul || 0) >= PUZ.length ? T('Hepsi tamam · ', 'All done · ') + PUZ.length + T(' bulmaca', ' puzzles') : T('Bulmaca ', 'Puzzle ') + ((SV.bul || 0) + 1) + ' / ' + PUZ.length + T(' · sınırlı bombayla çöz', ' · solve with limited bombs');
-  $('sSound').textContent = SV.sound ? T('Açık', 'On') : T('Kapalı', 'Off'); $('sMusic').textContent = SV.music ? T('Açık', 'On') : T('Kapalı', 'Off'); $('sLang').textContent = SV.lang === 'en' ? 'English' : 'Türkçe';
+  $('sSound').textContent = SV.sound ? T('Açık', 'On') : T('Kapalı', 'Off'); $('sMusic').textContent = SV.music ? T('Açık', 'On') : T('Kapalı', 'Off'); if ($('sLang')) $('sLang').textContent = SV.lang === 'en' ? 'English' : 'Türkçe';
   if (!stageCur || stageCur !== stageChars[ch.id]) showStageChar(ch.id);
 }
 function openLevels(m) {
@@ -788,7 +795,7 @@ $('howBtn').addEventListener('click', () => sheet('how', true)); $('setBtn').add
 document.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', () => sheet(b.dataset.close, false)));
 $('tSound').addEventListener('click', () => { SV.sound = !SV.sound; save(); renderHome(); AUD.play('ui'); });
 $('tMusic').addEventListener('click', () => { SV.music = !SV.music; save(); renderHome(); AUD.music(SV.music ? 'menu' : null); AUD.want = 'menu'; });
-$('tLang').addEventListener('click', () => { SV.lang = SV.lang === 'en' ? 'tr' : 'en'; save(); AUD.play('ui'); applyLang(); renderHome(); });
+if ($('tLang')) $('tLang').addEventListener('click', () => { SV.lang = SV.lang === 'en' ? 'tr' : 'en'; save(); AUD.play('ui'); applyLang(); renderHome(); });
 // online lobby
 async function joinRoom(code) { $('lobErr').textContent = T('Bağlanıyor…', 'Connecting…'); const ok = await NET.open(code); if (!ok) { $('lobErr').textContent = NET.err; return; } $('lobErr').textContent = ''; $('lobJoin').hidden = true; $('lobRoom').hidden = false; renderLobby(); }
 $('lobGo').addEventListener('click', () => { const c = $('lobInput').value.trim(); if (c.length < 3) { $('lobErr').textContent = T('En az 3 haneli bir kod yaz.', 'Type a code with at least 3 characters.'); return; } joinRoom(c); });
