@@ -1,7 +1,7 @@
 // ===== Flix Bomba game =====
 // Grid rules and the bot's "flee / bomb the crate / hunt" loop follow MattSkala/html5-bombergirl (MIT); rewritten for 3D with pathfinding.
 const $ = (id) => document.getElementById(id);
-const VERSION = '1.3';
+const VERSION = '1.3.1';
 const SAVE_KEY = 'flix_bomba1';
 let SV = { char: 'flix', diff: 1, sound: true, music: true, wins: 0, games: 0, seenHow: false, mac: 0, bul: 0 };
 try { Object.assign(SV, JSON.parse(localStorage.getItem(SAVE_KEY) || '{}')); } catch (e) {}
@@ -109,7 +109,8 @@ if (SV.noads && window.FlixAds) window.FlixAds.setAdsRemoved(true);
 // shop
 const PACKS = [{ id: 'bomba_tuy_1000', n: 1000, price: '$0.99' }, { id: 'bomba_tuy_3500', n: 3500, price: '$2.99' }, { id: 'bomba_tuy_7000', n: 7000, price: '$4.99' }, { id: 'bomba_tuy_16000', n: 16000, price: '$9.99' }];
 const NOADS = { id: 'bomba_noads', price: '$2.99' }, FREE_AD = 60, FREE_AD_MAX = 5;
-const priceOf = (p) => (window.FlixNative && window.FlixNative.price && window.FlixNative.price(p.id)) || p.price;
+const priceOf = (p) => (window.FlixNative && window.FlixNative.price && window.FlixNative.price(p.id)) || (NATIVE ? '…' : p.price);
+window.addEventListener('flixprices', () => { if (!$('shop').hidden) renderShop(); });
 window.__fkuGrant = (id, tx) => {
   if (tx) { if (SV.tx.includes(tx)) return; SV.tx.push(tx); if (SV.tx.length > 80) SV.tx.shift(); }
   const p = PACKS.find((q) => q.id === id); if (p) { SV.tuy += p.n; toast('+' + fmtN(p.n) + ' 🪶'); } else if (id === NOADS.id) { SV.noads = 1; if (window.FlixAds) window.FlixAds.setAdsRemoved(true); toast(T('Reklamlar kapandı', 'Ads removed')); }
@@ -144,7 +145,7 @@ function renderDaily() {
 
 // first-time goal cards
 const TIPS = {
-  macera: () => [T('Macera: ne yapacağım?', 'Adventure: what do I do?'), [T('👾 Canavarları bombayla patlat. Onlara dokunursan yanarsın.', '👾 Blast the monsters with bombs. Touching one knocks you out.'), T('🧱 Tuğlaları kır. Birinin altında gizli kapı var.', '🧱 Break the bricks. A hidden door is under one of them.'), T('🚪 Bütün canavarlar bitince kapı açılır. Kapıya gir, bölüm biter.', '🚪 When every monster is gone the door opens. Walk in to finish the level.'), T('⏱ Süre dolmadan bitir. 20 bölüm var, gittikçe zorlaşır.', '⏱ Beat the clock. There are 20 levels and they get harder.')]],
+  macera: () => [T('Macera: ne yapacağım?', 'Adventure: what do I do?'), [T('👾 Canavarları bombayla patlat. Onlara dokunursan yanarsın.', '👾 Blast the monsters with bombs. Touching one knocks you out.'), T('🧱 Tuğlaları kır. Birinin altında gizli kapı var.', '🧱 Break the bricks. A hidden door is under one of them.'), T('🚪 Bütün canavarlar bitince kapı açılır. Kapıya gir, bölüm biter.', '🚪 When every monster is gone the door opens. Walk in to finish the level.'), T('⏱ Süre dolmadan bitir. Her haritada 25 bölüm var, gittikçe zorlaşır.', '⏱ Beat the clock. Every map has 25 levels and they get harder.')]],
   arena: () => [T('Arena: ne yapacağım?', 'Arena: what do I do?'), [T('💣 4 oyuncu aynı alanda. Bombanla rakiplerini sıkıştır.', '💣 4 players, one arena. Trap your rivals with bombs.'), T('🏁 Son ayakta kalan raundu alır.', '🏁 Last one standing takes the round.'), T('🏆 3 raunt alan maçı kazanır.', '🏆 First to 3 rounds wins the match.'), T('⏱ 2 dakika sonra alan kenarlardan daralır.', '⏱ After 2 minutes the arena starts closing in.')]],
   bulmaca: () => [T('Bulmaca: ne yapacağım?', 'Puzzle: what do I do?'), [T('⭐ Hedef: bütün altın kasaları patlatmak.', '⭐ Goal: blow up every gold crate.'), T('💣 Bomban sayılı. Nereye koyacağını düşün.', '💣 You only get a few bombs. Think where to put them.'), T('🟣 Mor bombalar uyur. Bir patlama değince onlar da patlar.', '🟣 Purple bombs sleep. A blast that touches one sets it off.'), T('🧠 Süre yok, acele etme.', '🧠 No timer, take your time.')]],
 };
@@ -233,12 +234,12 @@ function showStageChar(cid, sk) {
 }
 
 // ---------- game state ----------
-const G = { state: 'menu', mode: 'arena', opt: {}, grid: [], players: [], bombs: [], mons: [], flames: new Map(), pus: new Map(), hidden: new Map(), pending: [], t: 0, time: 0, round: 1, paused: false, shake: 0, sd: null, auto: false, door: null, bLeft: 0, rng: Math.random };
+const G = { state: 'menu', mode: 'arena', opt: {}, grid: [], players: [], bombs: [], mons: [], flames: new Map(), fby: new Map(), pus: new Map(), hidden: new Map(), pending: [], t: 0, time: 0, round: 1, paused: false, shake: 0, sd: null, auto: false, door: null, bLeft: 0, rng: Math.random };
 const DIRS = [[1, 0], [-1, 0], [0, 1], [0, -1]];
 const inb = (x, y) => x >= 0 && y >= 0 && x < COLS && y < ROWS;
 const key = (x, y) => y * COLS + x;
 const SPAWNS = [[0, ROWS - 1], [COLS - 1, 0], [0, 0], [COLS - 1, ROWS - 1]];
-const ROUND_TIME = 120, FUSE = 2.6, FLAME = 0.5, WINS = 3, MAC_LEVELS = 20;
+const ROUND_TIME = 120, FUSE = 2.6, FLAME = 0.5, WINS = 3;
 const DIFF = [{ n: 'Kolay', react: 0.42, hunt: 0.15, sloppy: 0.04 }, { n: 'Normal', react: 0.2, hunt: 0.5, sloppy: 0.02 }, { n: 'Zor', react: 0.07, hunt: 0.95, sloppy: 0 }];
 const PUZ = [{"g":["#########","#########","##..T#.##","##.T3.###","##..T.P##","##.cc..##","##.#..c##","##....c##","#########","#########","#########"],"r":2,"k":1},{"g":["#########","c.....c.#",".c#.c...#",".c#....c#",".c..cc#.#","..T.##c.#","..1T.#.c#",".1..cc#c#",".P.c.cc##","...3#c..#","#########"],"r":2,"k":1},{"g":["#########","#########","##c#c2.##","##c..####","####...##","##2.c.c##","##..1PT##","##....3##","##c#.cT##","#########","#########"],"r":2,"k":1},{"g":["#########","#########","#Tcc.c..#","#c...Pc##","#cT1.#cc#","#ccc..#c#","#....##c#","#..c.#..#","#c..###.#","#########","#########"],"r":1,"k":2},{"g":["#########",".#..P..c#","#.c...c.#","#.cc.c.c#","#c.c.ccc#",".....c..#","..#..c..#","c.cTc#T##","....T..2#","#########","#########"],"r":3,"k":2},{"g":["#########","#########","###c.Tc##","#P..c#.##","#c1..Tc##","#.c.cc.##","#ccT..1##","##.c#..##","#.#...c##","#########","#########"],"r":2,"k":2},{"g":["#########","#########","#..1..c##","#.c.T..##","#.3.##.##","#cc.c3.##","#c.P.#.##","#T.#..1##","#.#..c.##","#########","#########"],"r":1,"k":2},{"g":["#########","#########","#########","##.TcT.##","##TP##3##","##....c##","##cT##.##","##.....##","#########","#########","#########"],"r":3,"k":3},{"g":["#########","#.#...c##","#c.3.3.##","#c.#c..##","#....T.##","#..cT.###","#Pcc#..##","##c#c..##","#.#T#c###","##.....##","#########"],"r":1,"k":3},{"g":["#########","#..c.####","##.##T###","#.....###","#.....###","#ccc.#T##","#T..32.##","#T.....##","#......##","#cc..P.##","#########"],"r":1,"k":3},{"g":["#########","#########",".#..#..##",".#.c.#c.#","...1...P#","cc#c.T..#","......#.#","##cT...T#","c.TT...##","#########","#########"],"r":1,"k":4},{"g":["#########","..#..#.c#","c.#.#T###","#c#c..Pc#",".c#cc.c.#","c..#Tc..#","..c#..T.#","T..c.T2.#","...cccc.#","#########","#########"],"r":2,"k":4}];
 function mkRng(seed) { let s = Math.floor(seed) % 2147483647; if (s <= 0) s += 2147483646; return () => ((s = (s * 16807) % 2147483647) - 1) / 2147483646; }
@@ -274,7 +275,7 @@ function resetPlayer(p, spawn) {
   p.ai = { path: [], think: Math.random() * 0.4, wait: 0 }; p.g.visible = true; p.g.scale.setScalar(1); p.g.rotation.set(0, 0, 0); p.P.g.position.y = 0; p.P.g.rotation.set(0, 0, 0); p.yaw = Math.atan2(p.fx, p.fy); p.shield.visible = p.ice.visible = p.skull.visible = false;
 }
 function clearRound() {
-  for (const b of G.bombs) dyn.remove(b.m); G.bombs.length = 0; for (const [, u] of G.pus) dyn.remove(u.m); G.pus.clear(); G.flames.clear(); G.pending.length = 0; blasts.clear();
+  for (const b of G.bombs) dyn.remove(b.m); G.bombs.length = 0; for (const [, u] of G.pus) dyn.remove(u.m); G.pus.clear(); G.flames.clear(); G.fby.clear(); G.pending.length = 0; blasts.clear();
   for (const m of G.mons) dyn.remove(m.m); G.mons.length = 0; if (G.door) dyn.remove(G.door.m); G.door = null; G.doorCell = -1;
   G.sd = null; G.drop = null;
 }
@@ -335,7 +336,7 @@ function monUpdate(dt) {
     }
     mo.m.position.set(wx(mo.x), Math.abs(Math.sin(mo.t * 5)) * 0.08, wz(mo.y)); if (mo.dx || mo.dy) mo.m.rotation.y = Math.atan2(mo.dx, mo.dy); mo.m.scale.set(1 + Math.sin(mo.t * 10) * 0.04, 1 - Math.sin(mo.t * 10) * 0.04, 1 + Math.sin(mo.t * 10) * 0.04);
     if (G.flames.has(key(Math.round(mo.x), Math.round(mo.y)))) { mo.alive = false; AUD.play('pick'); parts.emit(wx(mo.x), 0.5, wz(mo.y), [MON[mo.type].col, 0xffffff], 14, 3, 0.12, 5, 0.9); updHud(); if (G.door && !G.mons.some((q) => q.alive)) openDoor(); continue; }
-    if (me.alive && Math.hypot(me.px - mo.x, me.py - mo.y) < 0.62 && !me.dash) killPlayer(me);
+    if (me.alive && Math.hypot(me.px - mo.x, me.py - mo.y) < 0.62 && !me.dash) { me.kBy = 'mon'; killPlayer(me); }
   }
 }
 function revealDoor() { const k = G.doorCell, x = k % COLS, y = (k / COLS) | 0, m = makeDoor(); m.position.set(wx(x), 0, wz(y)); dyn.add(m); G.door = { x, y, m, open: false }; toast(T('Kapı bulundu!', 'Door found!')); if (!G.mons.some((q) => q.alive)) openDoor(); }
@@ -359,7 +360,7 @@ function explode(b) {
   const x = Math.round(b.x), y = Math.round(b.y); AUD.play('boom'); G.shake = Math.min(0.5, G.shake + 0.28); blasts.ring(x, y);
   parts.emit(wx(x), 0.5, wz(y), [0x2a80dc, 0x2fa043, 0xffd41f, 0xffffff], 10, 3.5, 0.1, 5, 0.9);
   for (const c of blastCells(x, y, b.range, G.grid, b.pierce)) {
-    const k = key(c[0], c[1]), v = G.grid[c[1]][c[0]]; blasts.add(c[0], c[1], (c[2] || 0) * 0.03, FLAME + (G.fx.flame || 0) + 0.12); G.flames.set(k, Math.max(G.flames.get(k) || 0, FLAME + (G.fx.flame || 0)));
+    const k = key(c[0], c[1]), v = G.grid[c[1]][c[0]]; blasts.add(c[0], c[1], (c[2] || 0) * 0.03, FLAME + (G.fx.flame || 0) + 0.12); G.flames.set(k, Math.max(G.flames.get(k) || 0, FLAME + (G.fx.flame || 0))); G.fby.set(k, b.owner);
     if (v >= 2) { G.grid[c[1]][c[0]] = 0; G.dirty = true; parts.emit(wx(c[0]), 0.5, wz(c[1]), v === 3 ? [0xffd41f, 0xf4a900, 0xffffff] : G.th.pc, 12, 3, 0.16, 4.5, 0.9);
       const t = G.hidden.get(k); if (t) { G.hidden.delete(k); G.pending.push({ x: c[0], y: c[1], t: FLAME + (G.fx.flame || 0) + 0.02, type: t }); } if (k === G.doorCell && !G.door) revealDoor(); if (v === 3) updHud(); }
     else { const u = G.pus.get(k); if (u) { dyn.remove(u.m); G.pus.delete(k); } const ob = bombAt(c[0], c[1]); if (ob) { ob.fuse = Math.min(ob.fuse, 0.07 + (c[2] || 0) * 0.02); ob.chain = true; } }
@@ -543,7 +544,7 @@ function update(dt) {
       // pickups
       const k = key(Math.round(p.px), Math.round(p.py)), u = G.pus.get(k);
       if (u) { dyn.remove(u.m); G.pus.delete(k); applyPu(p, u.type); p.picked.push(k); if (p === me0 && !p.isBot) { AUD.play(u.type === 'skull' ? 'lose' : 'pick'); toast(T(...(u.type === 'skull' ? CURSE_TXT[p.curse.type] : PU_TXT[u.type]))); } parts.emit(wx(p.px), 0.6, wz(p.py), u.type === 'skull' ? [0x9b3bff, 0x15121c] : [0xffd41f, 0xffffff], 8, 2, 0.09, 4, 0.6); }
-      if (G.flames.has(k) && p.shieldT <= 0 && !p.dash) killPlayer(p);
+      if (G.flames.has(k) && p.shieldT <= 0 && !p.dash) { p.kBy = G.fby.get(k); killPlayer(p); }
       if (G.door && G.door.open && Math.round(p.px) === G.door.x && Math.round(p.py) === G.door.y && p.alive) finish(true);
     }
     p.mv += ((mv > 0.0005 ? 1 : 0) - p.mv) * Math.min(1, dt * 14);
@@ -573,7 +574,7 @@ function update(dt) {
   if (G.dirty) { blocks.sync(G.grid, G.drop); G.dirty = false; }
   if (playing) {
     if (mode === 'arena' || (mode === 'online' && NET.isHost())) { const alive = G.players.filter((p) => p.alive); if (alive.length <= 1) { G.state = 'roundEnd'; G.endT = 0; G.winner = alive[0] || null; G.netEnd = false; } }
-    else if (mode === 'macera') { if (!me0.alive) finish(false, T('YAKALANDIN', 'CAUGHT!')); }
+    else if (mode === 'macera') { if (!me0.alive) finish(false, me0.kBy === me0 ? T('KENDİ BOMBAN!', 'YOUR OWN BOMB!') : T('YAKALANDIN', 'CAUGHT!')); }
     else if (mode === 'bulmaca') { const idle = G.flames.size === 0 && !G.bombs.some((b) => !b.dormant); if (!me0.alive) finish(false, T('PATLADIN', 'YOU BLEW UP')); else if (targetsLeft() === 0) { if (idle) finish(true); } else if (G.bLeft <= 0 && idle) finish(false, T('BOMBALAR BİTTİ', 'OUT OF BOMBS')); }
   }
   if (G.state === 'done') { const was = G.resT; G.resT += dt; if (was < 1.4 && G.resT >= 1.4) showResult(); }
@@ -625,6 +626,7 @@ function makePortraits() {
   renderer.setClearColor(0x000000, 1);
 }
 // ---------- online (artifact room: everyone with the page open; each player owns their own character and bombs) ----------
+const NET_GRACE = 5000;
 const NET = {
   base: null, room: null, code: '', seed: 1, h: null, gameN: null, sendT: 0, unsub: null, err: '',
   async open(code) {
@@ -632,15 +634,16 @@ const NET = {
     if (!this.base) { this.err = T('Online, oyunu claude.ai bağlantısından açınca çalışır.', 'Online works when the game is opened from its claude.ai link.'); return false; }
     await this.leave();
     try { this.room = await this.base.join('fb-' + code.toLowerCase().replace(/[^a-z0-9]/g, '')); } catch (e) { this.err = T('Odaya bağlanılamadı. Tekrar dene.', 'Could not join the room. Try again.'); this.room = null; return false; }
-    this.code = code; this.h = null; this.gameN = null; this.j = Date.now() + Math.random();
+    this.code = code; this.h = null; this.gameN = null; this.mh = null; this.amHost = false; this.hostGone = 0; $('lobNote').hidden = true; this.j = Date.now() + Math.random();
     this.unsub = this.room.onPeers(() => { if (!$('lobby').hidden) renderLobby(); }, () => {});
     this.room.presence({ c: SV.char, j: this.j, h: null, s: null, b: null, pf: this.pf() }).catch(() => {}); return true;
   },
   pf() { return { n: SV.name, lv: myLv(), k: SV.sk[SV.char] | 0, a: [SV.av.f, SV.av.bg, SV.av.fr, SV.av.st] }; },
-  async leave() { if (this.unsub) { try { this.unsub(); } catch (e) {} this.unsub = null; } if (this.room) { try { await this.room.leave(); } catch (e) {} } this.room = null; this.h = null; },
+  async leave() { this.mh = null; this.amHost = false; if (this.unsub) { try { this.unsub(); } catch (e) {} this.unsub = null; } if (this.room) { try { await this.room.leave(); } catch (e) {} } this.room = null; this.h = null; },
   list() { if (!this.room) return []; return this.room.peers().filter((p) => p.presence && p.presence.c && p.kind !== 'agent').map((p) => ({ peer: p.peer, me: p.isMe && p.sameTab, c: p.presence.c, j: p.presence.j || 0, pr: p.presence, pf: cleanPf(p.presence.pf) })).sort((a, b) => a.j - b.j || (a.peer < b.peer ? -1 : 1)); },
   host() { return this.list()[0] || null; },
-  isHost() { const h = this.host(); return !!h && h.me; },
+  isHost() { if (this.mh && G.mode === 'online' && G.state !== 'menu') return this.amHost; const h = this.host(); return !!h && h.me; },
+  hostLeft() { if (this.leaving) return; this.leaving = true; setTimeout(() => { this.leaving = false; this.mh = null; this.amHost = false; this.h = null; this.hostGone = 0; if (G.mode !== 'online' || G.state === 'menu' || G.state === 'matchEnd') return; toMenu(); if (!this.room) return; $('lobJoin').hidden = true; $('lobRoom').hidden = false; $('lobNote').textContent = T('Oda sahibi ayrıldı', 'Host left'); $('lobNote').hidden = false; sheet('lobby', true); renderLobby(); toast(T('Oda sahibi ayrıldı', 'Host left')); }, 0); },
   roster() { const L = this.list(), ord = (this.h && this.h.ord) || []; return ord.map((id) => L.find((p) => p.peer === id)).filter(Boolean); },
   push(extra) { if (this.room) this.room.presence(extra).catch(() => {}); },
   hostStart() { const L = this.list().slice(0, 4); if (L.length < 2 || !this.isHost()) return; this.h = { n: Math.floor(Math.random() * 1e9), seed: Math.floor(Math.random() * 2e9) + 1, rd: 1, ph: 'play', win: null, w: {}, ord: L.map((p) => p.peer) }; this.push({ h: this.h }); },
@@ -651,16 +654,17 @@ const NET = {
   poll() {
     if (!this.room) return; const ho = this.host(); if (!ho) return; const h = ho.me ? this.h : ho.pr.h; if (!h) return;
     if (!ho.me) this.h = h;
-    if (h.ph === 'play' && h.n !== this.gameN && h.rd === 1 && h.ord.some((id) => this.list().some((p) => p.peer === id && p.me))) { this.gameN = h.n; this.seed = h.seed; for (const id of ['lobby', 'modes']) $(id).hidden = true; mmStop(); startGame('online'); }
+    if (h.ph === 'play' && h.n !== this.gameN && h.rd === 1 && h.ord.some((id) => this.list().some((p) => p.peer === id && p.me))) { this.gameN = h.n; this.seed = h.seed; this.mh = ho.peer; this.amHost = !!ho.me; this.hostGone = 0; $('lobNote').hidden = true; for (const id of ['lobby', 'modes']) $(id).hidden = true; mmStop(); startGame('online'); }
   },
   tick(dt) {
-    if (!this.room) return; const me = G.players[0], L = this.list(), ho = L[0];
+    if (!this.room || !G.players[0]) return; const me = G.players[0], L = this.list(), ho = this.mh ? L.find((q) => q.peer === this.mh) || null : L[0], now = performance.now();
+    if (this.mh && !this.amHost) { if (ho) this.hostGone = 0; else if (!this.hostGone) this.hostGone = now; else if (now - this.hostGone > NET_GRACE) { this.hostLeft(); return; } }
     // send my state ~12 times a second
     this.sendT -= dt; if (this.sendT <= 0) { this.sendT = 0.08;
       this.push({ pf: this.pf(), c: SV.char, j: this.j, h: this.isHost() ? this.h : null, rd: G.round, s: [+me.px.toFixed(2), +me.py.toFixed(2), me.fx, me.fy, me.alive ? 1 : 0, me.shieldT > 0 ? 1 : 0, me.frozenT > 0 ? 1 : 0, me.mv > 0.3 ? 1 : 0], b: G.bombs.filter((b) => b.owner === me).map((b) => [b.id, +b.x.toFixed(2), +b.y.toFixed(2), b.range, +b.fuse.toFixed(2), b.pierce ? 1 : 0]), ex: me.exploded, pk: me.picked.slice(-24), fz: me.fzN || 0 }); }
     // read the others
     for (const p of G.players) { if (!p.remote) continue; const r = L.find((q) => q.peer === p.peer);
-      if (!r) { if (p.alive && G.state === 'play') killPlayer(p, true); continue; } const pr = r.pr; if (pr.rd !== G.round || !pr.s) continue; const s = pr.s;
+      if (!r) { if (!p.goneAt) p.goneAt = now; if (p.alive && G.state === 'play' && now - p.goneAt > NET_GRACE) killPlayer(p, true); continue; } p.goneAt = 0; const pr = r.pr; if (pr.rd !== G.round || !pr.s) continue; const s = pr.s;
       if (G.state === 'play' || G.state === 'intro') { const d = Math.hypot(s[0] - p.px, s[1] - p.py), k = d > 2.5 ? 1 : Math.min(1, dt * 16); p.px += (s[0] - p.px) * k; p.py += (s[1] - p.py) * k; if (s[2] || s[3]) { p.fx = s[2]; p.fy = s[3]; } p.netMv = s[7]; p.shieldT = s[5] ? 0.3 : 0; p.frozenT = s[6] ? 0.3 : 0; if (!s[4] && p.alive && G.state === 'play') killPlayer(p, true); }
       if (!p.done) p.done = new Set();
       for (const e of pr.b || []) { if (p.done.has(e[0])) continue; let b = G.bombs.find((q) => q.owner === p && q.id === e[0]); if (!b) { const m = makeBombModel(e[5] ? 0xc21a1a : 0x0b2f66); dyn.add(m); b = { id: e[0], x: e[1], y: e[2], fuse: e[4], range: e[3], owner: p, m, vx: 0, vy: 0, t: 0, pierce: !!e[5] }; G.bombs.push(b); p.active++; AUD.play('place'); } else if (Math.abs(b.x - e[1]) + Math.abs(b.y - e[2]) > 0.05) { b.x += (e[1] - b.x) * 0.5; b.y += (e[2] - b.y) * 0.5; } }
@@ -780,7 +784,7 @@ $('lobGo').addEventListener('click', () => { const c = $('lobInput').value.trim(
 $('lobNew').addEventListener('click', () => { const c = String(1000 + Math.floor(Math.random() * 9000)); $('lobInput').value = c; joinRoom(c); });
 $('lobQuick').addEventListener('click', () => { AUD.play('ui'); sheet('lobby', false); mmStart('quick'); });
 $('lobStart').addEventListener('click', () => { AUD.play('ui'); NET.hostStart(); });
-$('lobBack').addEventListener('click', () => { NET.leave(); sheet('lobby', false); });
+$('lobBack').addEventListener('click', () => { NET.leave(); $('lobNote').hidden = true; sheet('lobby', false); });
 $('vsX').addEventListener('click', () => { AUD.play('ui'); mmStop(); NET.leave(); });
 
 
@@ -803,7 +807,7 @@ function showResult() {
   payout(rw, 'res'); adScreen('over');
   $('resStars').hidden = !stars; $('resStars').textContent = starStr(stars);
   $('resT').textContent = win ? (mac ? T('Bölüm ', 'Level ') : T('Bulmaca ', 'Puzzle ')) + L + T(' tamam', ' cleared') : G.resMsg;
-  $('resS').textContent = win ? (L >= max ? (mac ? T('Bu haritayı bitirdin! Sıradaki haritaya bak.', 'You finished this map! Check the next one.') : T('Bütün bulmacaları bitirdin.', 'You finished every puzzle.')) : mac && stars < 3 ? T('Daha hızlı bitirirsen 3 yıldız alırsın.', 'Finish faster for 3 stars.') : T('Sıradaki seni bekliyor.', 'The next one is waiting.')) : m === 'bulmaca' ? T('İpucu: mor uyuyan bombalar patlama değince zincirleme patlar. Bomban sınırlı.', 'Hint: sleeping purple bombs go off when a blast touches them. Your bombs are limited.') : T('Canavarlara dokunma, kendi bombandan kaç ve süreye dikkat et.', 'Do not touch monsters, run from your own bombs and watch the clock.');
+  $('resS').textContent = win ? (L >= max ? (mac ? (w >= THEMES.length - 1 ? T('Bütün haritaları bitirdin!', 'You finished every map!') : T('Bu haritayı bitirdin! Sıradaki haritaya bak.', 'You finished this map! Check the next one.')) : T('Bütün bulmacaları bitirdin.', 'You finished every puzzle.')) : mac && stars < 3 ? T('Daha hızlı bitirirsen 3 yıldız alırsın.', 'Finish faster for 3 stars.') : T('Sıradaki seni bekliyor.', 'The next one is waiting.')) : m === 'bulmaca' ? T('İpucu: mor uyuyan bombalar patlama değince zincirleme patlar. Bomban sınırlı.', 'Hint: sleeping purple bombs go off when a blast touches them. Your bombs are limited.') : T('Canavarlara dokunma, kendi bombandan kaç ve süreye dikkat et.', 'Do not touch monsters, run from your own bombs and watch the clock.');
   $('resGo').hidden = !win || L >= max; $('resRetry').textContent = win ? T('Tekrar oyna', 'Play again') : T('TEKRAR DENE', 'TRY AGAIN'); $('resRetry').className = win ? 'ghost' : 'big'; sheet('res', true);
 }
 let stageKey = '';

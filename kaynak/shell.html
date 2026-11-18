@@ -253,6 +253,12 @@ button:focus-visible{outline:3px solid var(--yel);outline-offset:2px}
 /* v1.4 */
 html,body{position:fixed;inset:0;width:100%}img{-webkit-user-drag:none}
 .xad #resAd,.xad #endAd,.xad #dayAd{display:none!important}.xon [data-m="online"]{display:none!important}
+/* v1.3.1: the Skins pill sits above the stats (it covered "Hız" on narrow phones) */
+.pill{top:-26px}
+@media (max-width:360px){.pill{padding:4px 10px;font-size:12px}}
+/* v1.3.1: profile on 320 px phones: tabs ("Çerçeve") and the 5 stat boxes stay inside the sheet */
+#pfTabs button{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#pfStats{grid-template-columns:repeat(5,minmax(0,1fr))}#pfStats b{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (max-width:360px){#pfTabs button{font-size:12px;padding:8px 1px}#pfStats{gap:4px}#pfStats b{font-size:14px}#pfStats span{font-size:8.5px}.pfTop{gap:10px}}
 </style>
 @@INTRO@@
 <canvas id="gl"></canvas>
@@ -306,7 +312,7 @@ html,body{position:fixed;inset:0;width:100%}img{-webkit-user-drag:none}
 <div id="levels" class="sheet" hidden><div class="in"><h2 id="lvTitle"></h2><div id="lvTabs"></div><p id="lvInfo" style="text-align:center"></p><div id="lvGrid"></div><div id="lvLock" class="col" hidden><p id="lvLockT" style="text-align:center"></p><button class="big buy" id="lvBuy"></button></div><button class="ghost" data-close="levels" data-en="Back">Geri</button></div></div>
 <div id="lobby" class="sheet" hidden><div class="in"><h2>Online</h2>
   <div id="lobJoin" class="col"><button class="big" id="lobQuick" data-en="QUICK MATCH">HIZLI EŞLEŞ</button><p style="text-align:center" data-en="or play with friends: everyone types the same room code">ya da arkadaşlarınla: herkes aynı oda kodunu yazsın</p><input id="lobInput" inputmode="numeric" maxlength="6" placeholder="Oda kodu" autocomplete="off" aria-label="Oda kodu"><div class="row"><button class="ghost" id="lobNew" style="flex:1" data-en="Create room">Oda kur</button><button class="ghost" id="lobGo" style="flex:1" data-en="Join">Katıl</button></div><p id="lobErr" style="color:var(--red);text-align:center;min-height:20px"></p></div>
-  <div id="lobRoom" class="col" hidden><p style="text-align:center"><span data-en="Room code: ">Oda kodu: </span><b id="lobCode" style="font-size:22px;color:var(--red)"></b></p><div id="lobList" class="col"></div><button class="big" id="lobStart"></button><p id="lobWait" style="text-align:center" data-en="Waiting for the host to start…">Oda sahibinin başlatması bekleniyor…</p></div>
+  <div id="lobRoom" class="col" hidden><p style="text-align:center"><span data-en="Room code: ">Oda kodu: </span><b id="lobCode" style="font-size:22px;color:var(--red)"></b></p><p id="lobNote" hidden style="text-align:center;color:var(--red);font-weight:800;margin:0"></p><div id="lobList" class="col"></div><button class="big" id="lobStart"></button><p id="lobWait" style="text-align:center" data-en="Waiting for the host to start…">Oda sahibinin başlatması bekleniyor…</p></div>
   <button class="ghost" id="lobBack" data-en="Back">Geri</button></div></div>
 <div id="res" class="sheet" hidden><div class="in"><h2 id="resT"></h2><div id="resStars" hidden></div><p id="resS" style="text-align:center"></p><div id="resR" class="rw"></div><button id="resAd" class="adb"></button><button class="big" id="resGo" data-en="NEXT">SONRAKİ</button><button class="ghost" id="resRetry">Tekrar dene</button><button class="ghost" id="resHome" data-en="Menu">Menü</button></div></div>
 <div id="vs" class="sheet" hidden><div class="vsin"><h2 id="vsT"></h2><div id="vsGrid"></div><p id="vsMap"></p><button class="ghost" id="vsX" data-en="Cancel">Vazgeç</button></div></div>

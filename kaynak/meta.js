@@ -93,7 +93,8 @@ if (SV.noads && window.FlixAds) window.FlixAds.setAdsRemoved(true);
 // shop
 const PACKS = [{ id: 'bomba_tuy_1000', n: 1000, price: '$0.99' }, { id: 'bomba_tuy_3500', n: 3500, price: '$2.99' }, { id: 'bomba_tuy_7000', n: 7000, price: '$4.99' }, { id: 'bomba_tuy_16000', n: 16000, price: '$9.99' }];
 const NOADS = { id: 'bomba_noads', price: '$2.99' }, FREE_AD = 60, FREE_AD_MAX = 5;
-const priceOf = (p) => (window.FlixNative && window.FlixNative.price && window.FlixNative.price(p.id)) || p.price;
+const priceOf = (p) => (window.FlixNative && window.FlixNative.price && window.FlixNative.price(p.id)) || (NATIVE ? '…' : p.price);
+window.addEventListener('flixprices', () => { if (!$('shop').hidden) renderShop(); });
 window.__fkuGrant = (id, tx) => {
   if (tx) { if (SV.tx.includes(tx)) return; SV.tx.push(tx); if (SV.tx.length > 80) SV.tx.shift(); }
   const p = PACKS.find((q) => q.id === id); if (p) { SV.tuy += p.n; toast('+' + fmtN(p.n) + ' 🪶'); } else if (id === NOADS.id) { SV.noads = 1; if (window.FlixAds) window.FlixAds.setAdsRemoved(true); toast(T('Reklamlar kapandı', 'Ads removed')); }
@@ -127,7 +128,7 @@ function renderDaily() {
 
 // first-time goal cards
 const TIPS = {
-  macera: () => [T('Macera: ne yapacağım?', 'Adventure: what do I do?'), [T('👾 Canavarları bombayla patlat. Onlara dokunursan yanarsın.', '👾 Blast the monsters with bombs. Touching one knocks you out.'), T('🧱 Tuğlaları kır. Birinin altında gizli kapı var.', '🧱 Break the bricks. A hidden door is under one of them.'), T('🚪 Bütün canavarlar bitince kapı açılır. Kapıya gir, bölüm biter.', '🚪 When every monster is gone the door opens. Walk in to finish the level.'), T('⏱ Süre dolmadan bitir. 20 bölüm var, gittikçe zorlaşır.', '⏱ Beat the clock. There are 20 levels and they get harder.')]],
+  macera: () => [T('Macera: ne yapacağım?', 'Adventure: what do I do?'), [T('👾 Canavarları bombayla patlat. Onlara dokunursan yanarsın.', '👾 Blast the monsters with bombs. Touching one knocks you out.'), T('🧱 Tuğlaları kır. Birinin altında gizli kapı var.', '🧱 Break the bricks. A hidden door is under one of them.'), T('🚪 Bütün canavarlar bitince kapı açılır. Kapıya gir, bölüm biter.', '🚪 When every monster is gone the door opens. Walk in to finish the level.'), T('⏱ Süre dolmadan bitir. Her haritada 25 bölüm var, gittikçe zorlaşır.', '⏱ Beat the clock. Every map has 25 levels and they get harder.')]],
   arena: () => [T('Arena: ne yapacağım?', 'Arena: what do I do?'), [T('💣 4 oyuncu aynı alanda. Bombanla rakiplerini sıkıştır.', '💣 4 players, one arena. Trap your rivals with bombs.'), T('🏁 Son ayakta kalan raundu alır.', '🏁 Last one standing takes the round.'), T('🏆 3 raunt alan maçı kazanır.', '🏆 First to 3 rounds wins the match.'), T('⏱ 2 dakika sonra alan kenarlardan daralır.', '⏱ After 2 minutes the arena starts closing in.')]],
   bulmaca: () => [T('Bulmaca: ne yapacağım?', 'Puzzle: what do I do?'), [T('⭐ Hedef: bütün altın kasaları patlatmak.', '⭐ Goal: blow up every gold crate.'), T('💣 Bomban sayılı. Nereye koyacağını düşün.', '💣 You only get a few bombs. Think where to put them.'), T('🟣 Mor bombalar uyur. Bir patlama değince onlar da patlar.', '🟣 Purple bombs sleep. A blast that touches one sets it off.'), T('🧠 Süre yok, acele etme.', '🧠 No timer, take your time.')]],
 };

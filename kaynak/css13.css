@@ -62,3 +62,9 @@
 /* v1.4 */
 html,body{position:fixed;inset:0;width:100%}img{-webkit-user-drag:none}
 .xad #resAd,.xad #endAd,.xad #dayAd{display:none!important}.xon [data-m="online"]{display:none!important}
+/* v1.3.1: the Skins pill sits above the stats (it covered "Hız" on narrow phones) */
+.pill{top:-26px}
+@media (max-width:360px){.pill{padding:4px 10px;font-size:12px}}
+/* v1.3.1: profile on 320 px phones: tabs ("Çerçeve") and the 5 stat boxes stay inside the sheet */
+#pfTabs button{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#pfStats{grid-template-columns:repeat(5,minmax(0,1fr))}#pfStats b{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (max-width:360px){#pfTabs button{font-size:12px;padding:8px 1px}#pfStats{gap:4px}#pfStats b{font-size:14px}#pfStats span{font-size:8.5px}.pfTop{gap:10px}}

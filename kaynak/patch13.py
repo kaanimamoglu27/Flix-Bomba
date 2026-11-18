@@ -13,6 +13,7 @@ RS('<div id="levels" class="sheet" hidden><div class="in"><h2 id="lvTitle"></h2>
 RS('<h2 id="resT"></h2><p id="resS"','<h2 id="resT"></h2><div id="resStars" hidden></div><p id="resS"')
 RS('<h2 id="vsT"></h2><div id="vsGrid"></div>','<h2 id="vsT"></h2><div id="vsGrid"></div><p id="vsMap"></p>')
 RS('<div id="shop" class="sheet" hidden>','<div id="skins" class="sheet" hidden><div class="in"><div class="hd"><h2 id="skT"></h2><span id="skTuy"></span></div><div id="skBig"></div><div id="skGrid"></div><button class="big" id="skGo"></button><button class="ghost" data-close="skins" data-en="Close">Kapat</button></div></div>\n<div id="shop" class="sheet" hidden>')
+RS('<div id="lobList" class="col"></div>','<p id="lobNote" hidden style="text-align:center;color:var(--red);font-weight:800;margin:0"></p><div id="lobList" class="col"></div>')
 RS('<div class="card">\n    <div class="who">','<div class="card"><button id="skinBtn" class="pill"></button>\n    <div class="who">')
 open('shell.html','w').write(s)
 
@@ -20,7 +21,7 @@ g=open('game_v12.js').read()
 def R(old,new,n=1):
     global g
     assert g.count(old)==n,(old[:70],g.count(old)); g=g.replace(old,new)
-R("const VERSION = '1.2';","const VERSION = '1.3';")
+R("const VERSION = '1.2';","const VERSION = '1.3.1';")
 R("if (SV.lang !== 'tr' && SV.lang !== 'en')","const PER = 25;\n{ const d = { st: null, wOwn: [0], sk: {}, skOwn: {}, lastW: 0 }; for (const k in d) if (SV[k] === undefined || SV[k] === null) SV[k] = d[k]; }\nif (!SV.st) { SV.st = {}; for (let i = 1; i <= Math.min(PER, SV.mac || 0); i++) SV.st[i] = 2; }\nfor (const c of CHARS) { if (!Array.isArray(SV.skOwn[c.id])) SV.skOwn[c.id] = [0]; if (!(SV.sk[c.id] >= 0)) SV.sk[c.id] = 0; }\nif (SV.lang !== 'tr' && SV.lang !== 'en')")
 R("const myPf = () => ({ n: SV.name, lv: myLv(), av: SV.av });","const myPf = () => ({ n: SV.name, lv: myLv(), av: SV.av, sk: SV.sk[SV.char] | 0 });")
 R("av: normAv({ f: a[0], bg: a[1], fr: a[2], st: a[3] }) }; }","av: normAv({ f: a[0], bg: a[1], fr: a[2], st: a[3] }), sk: p.k >= 0 && p.k < 8 ? p.k | 0 : 0 }; }")
@@ -83,6 +84,27 @@ R("  PACKS.forEach((p, i) => { h += ","  if (hasIap()) PACKS.forEach((p, i) => {
 R("  h += '<button class=\"prow\" data-s=\"noads\"'","  if (hasIap() && (!NATIVE || window.FlixAds)) h += '<button class=\"prow\" data-s=\"noads\"'")
 R("  if (NATIVE) h += '<button class=\"prow\" data-s=\"rest\">","  if (NATIVE && hasIap() && window.FlixNative.restore) h += '<button class=\"prow\" data-s=\"rest\">")
 R("  $('shopRows').innerHTML = h;\n}","  if (!h) h = '<p style=\"text-align:center;margin:6px 0\">' + T('Tüy kazanmak için maç oyna, bölümleri geç ve günlük ödülünü topla.', 'Play matches, clear levels and collect your daily reward to earn feathers.') + '</p>';\n  $('shopRows').innerHTML = h;\n}")
+# v1.3.1: QA fixes
+# online: a player missing from the presence list gets a 5 s grace before counting as gone; the host is fixed when the match
+# starts (a guest never takes over and decides a round); if the host is gone for 5 s the guests go back to the room lobby
+R("const NET = {","const NET_GRACE = 5000;\nconst NET = {")
+R("this.code = code; this.h = null; this.gameN = null;","this.code = code; this.h = null; this.gameN = null; this.mh = null; this.amHost = false; this.hostGone = 0; $('lobNote').hidden = true;")
+R("async leave() { if (this.unsub)","async leave() { this.mh = null; this.amHost = false; if (this.unsub)")
+R("  isHost() { const h = this.host(); return !!h && h.me; },","  isHost() { if (this.mh && G.mode === 'online' && G.state !== 'menu') return this.amHost; const h = this.host(); return !!h && h.me; },\n  hostLeft() { if (this.leaving) return; this.leaving = true; setTimeout(() => { this.leaving = false; this.mh = null; this.amHost = false; this.h = null; this.hostGone = 0; if (G.mode !== 'online' || G.state === 'menu' || G.state === 'matchEnd') return; toMenu(); if (!this.room) return; $('lobJoin').hidden = true; $('lobRoom').hidden = false; $('lobNote').textContent = T('Oda sahibi ayrıldı', 'Host left'); $('lobNote').hidden = false; sheet('lobby', true); renderLobby(); toast(T('Oda sahibi ayrıldı', 'Host left')); }, 0); },")
+R("this.gameN = h.n; this.seed = h.seed; for (const id of ['lobby', 'modes']) $(id).hidden = true;","this.gameN = h.n; this.seed = h.seed; this.mh = ho.peer; this.amHost = !!ho.me; this.hostGone = 0; $('lobNote').hidden = true; for (const id of ['lobby', 'modes']) $(id).hidden = true;")
+R("if (!this.room) return; const me = G.players[0], L = this.list(), ho = L[0];","if (!this.room || !G.players[0]) return; const me = G.players[0], L = this.list(), ho = this.mh ? L.find((q) => q.peer === this.mh) || null : L[0], now = performance.now();\n    if (this.mh && !this.amHost) { if (ho) this.hostGone = 0; else if (!this.hostGone) this.hostGone = now; else if (now - this.hostGone > NET_GRACE) { this.hostLeft(); return; } }")
+R("if (!r) { if (p.alive && G.state === 'play') killPlayer(p, true); continue; }","if (!r) { if (!p.goneAt) p.goneAt = now; if (p.alive && G.state === 'play' && now - p.goneAt > NET_GRACE) killPlayer(p, true); continue; } p.goneAt = 0;")
+R("$('lobBack').addEventListener('click', () => { NET.leave(); sheet('lobby', false); });","$('lobBack').addEventListener('click', () => { NET.leave(); $('lobNote').hidden = true; sheet('lobby', false); });")
+# adventure: say so when your own bomb got you (not "caught")
+R("G.flames.set(k, Math.max(G.flames.get(k) || 0, FLAME + (G.fx.flame || 0)));","G.flames.set(k, Math.max(G.flames.get(k) || 0, FLAME + (G.fx.flame || 0))); G.fby.set(k, b.owner);")
+R("if (G.flames.has(k) && p.shieldT <= 0 && !p.dash) killPlayer(p);","if (G.flames.has(k) && p.shieldT <= 0 && !p.dash) { p.kBy = G.fby.get(k); killPlayer(p); }")
+R("&& !me.dash) killPlayer(me);","&& !me.dash) { me.kBy = 'mon'; killPlayer(me); }")
+R("else if (mode === 'macera') { if (!me0.alive) finish(false, T('YAKALANDIN', 'CAUGHT!')); }","else if (mode === 'macera') { if (!me0.alive) finish(false, me0.kBy === me0 ? T('KENDİ BOMBAN!', 'YOUR OWN BOMB!') : T('YAKALANDIN', 'CAUGHT!')); }")
+R("flames: new Map(),","flames: new Map(), fby: new Map(),")
+R("G.flames.clear();","G.flames.clear(); G.fby.clear();")
+# adventure has 25 levels per map (PER); the old 20-level constant is no longer used
+R("WINS = 3, MAC_LEVELS = 20;","WINS = 3;")
+assert 'MAC_LEVELS' not in g
 open('game.js','w').write(g)
 b=open('build.py').read().replace("VER='1.2'","VER='1.3'"); open('build.py','w').write(b)
 print('ok',len(g))
