@@ -1,0 +1,147 @@
+Oyunun mantığı	The idea	Le principe	So geht's	La idea	فكرة اللعبة
+Bombayı bırak ve <b>uzaklaş</b>. Bomba 2,5 saniye sonra patlar.	Drop a bomb and <b>get away</b>. It blows up after 2.5 seconds.	Pose une bombe et <b>éloigne-toi</b>. Elle explose au bout de 2,5 secondes.	Leg eine Bombe und <b>lauf weg</b>. Sie explodiert nach 2,5 Sekunden.	Pon una bomba y <b>aléjate</b>. Explota a los 2,5 segundos.	ضع القنبلة <b>وابتعد</b>. تنفجر بعد 2.5 ثانية.
+Patlama <b>artı (+)</b> şeklinde yayılır. Köşeyi dönersen güvendesin.	The blast spreads in a <b>plus (+)</b> shape. Turn a corner and you are safe.	L'explosion se propage en forme de <b>plus (+)</b>. Tourne au coin et tu es à l'abri.	Die Explosion breitet sich als <b>Plus (+)</b> aus. Bieg um die Ecke, dann bist du sicher.	La explosión se extiende en forma de <b>más (+)</b>. Dobla una esquina y estarás a salvo.	ينتشر الانفجار على شكل <b>علامة (+)</b>. انعطف عند الزاوية لتكون بأمان.
+Üstü yeşil <b>tuğlalar kırılır</b>, gri <b>taşlar kırılmaz</b>.	Green-topped <b>bricks break</b>, grey <b>stones never do</b>.	Les <b>briques</b> à dessus vert <b>se cassent</b>, les <b>pierres</b> grises <b>jamais</b>.	<b>Ziegel</b> mit grüner Oberseite <b>zerbrechen</b>, graue <b>Steine nie</b>.	Los <b>ladrillos</b> verdes <b>se rompen</b>, las <b>piedras</b> grises <b>nunca</b>.	<b>الطوب</b> ذو السطح الأخضر <b>ينكسر</b>، أما <b>الحجارة</b> الرمادية <b>فلا</b>.
+Kendi bomban seni de yakar!	Your own bomb hurts you too!	Ta propre bombe te touche aussi !	Deine eigene Bombe trifft auch dich!	¡Tu propia bomba también te daña!	قنبلتك تؤذيك أيضًا!
+Kontroller	Controls	Commandes	Steuerung	Controles	التحكم
+Ekranın solunda parmağını <b>sürükle</b>: karakter o yöne yürür.	<b>Drag</b> your finger on the left: the character walks that way.	<b>Glisse</b> ton doigt à gauche de l'écran : le personnage marche dans cette direction.	<b>Zieh</b> deinen Finger links auf dem Bildschirm: Die Figur läuft in diese Richtung.	<b>Arrastra</b> el dedo a la izquierda: el personaje camina hacia allí.	<b>اسحب</b> إصبعك في يسار الشاشة: تمشي الشخصية في ذلك الاتجاه.
+<b>BOMBA</b>: bulunduğun kareye bomba bırakır.	<b>BOMB</b>: drops a bomb on your tile.	<b>BOMBE</b> : pose une bombe sur ta case.	<b>BOMBE</b>: legt eine Bombe auf dein Feld.	<b>BOMBA</b>: pone una bomba en tu casilla.	<b>قنبلة</b>: تضع قنبلة في مربعك.
+<b>Özel güç</b>: her karakterde farklı. Dolunca yeşil yanar.	<b>Special power</b>: different for each character. Turns green when ready.	<b>Pouvoir spécial</b> : différent pour chaque personnage. Il devient vert quand il est prêt.	<b>Spezialkraft</b>: bei jedem Charakter anders. Leuchtet grün, wenn bereit.	<b>Poder especial</b>: distinto en cada personaje. Se pone verde cuando está listo.	<b>القوة الخاصة</b>: تختلف لكل شخصية. تضيء بالأخضر عندما تكون جاهزة.
+Klavye: ok tuşları, boşluk, Shift.	Keyboard: arrows, space, Shift.	Clavier : flèches, espace, Maj.	Tastatur: Pfeile, Leertaste, Shift.	Teclado: flechas, espacio, Mayús.	لوحة المفاتيح: الأسهم، المسافة، Shift.
+Güçler	Power-ups	Bonus	Power-ups	Potenciadores	المعززات
+Tuğlaları kırınca içinden çıkar. Üstüne yürü, al.	They pop out of broken bricks. Walk over them to collect.	Ils sortent des briques cassées. Marche dessus pour les prendre.	Sie springen aus zerbrochenen Ziegeln. Lauf drüber, um sie einzusammeln.	Salen de los ladrillos rotos. Pasa por encima para cogerlos.	تخرج من الطوب المكسور. امشِ فوقها لتأخذها.
+Fazla bomba	Extra bomb	Bombe en plus	Extrabombe	Bomba extra	قنبلة إضافية
+Uzun patlama	Longer blast	Explosion plus longue	Längere Explosion	Explosión más larga	انفجار أطول
+Tekme: bombayı it	Kick: push bombs	Coup de pied : pousse les bombes	Tritt: Bomben schieben	Patada: empuja bombas	ركلة: ادفع القنابل
+Delici: tuğladan geçer	Pierce: goes through bricks	Perçante : traverse les briques	Durchschlag: geht durch Ziegel	Perforante: atraviesa ladrillos	خارقة: تخترق الطوب
+Yelek: 1 patlamadan korur	Vest: blocks 1 blast	Gilet : protège d'1 explosion	Weste: schützt vor 1 Explosion	Chaleco: para 1 explosión	سترة: تحمي من انفجار واحد
+Tam menzil	Full range	Portée max	Volle Reichweite	Alcance total	مدى كامل
+Lanet: uzak dur!	Curse: avoid it!	Malédiction : évite-la !	Fluch: Finger weg!	Maldición: ¡evítala!	لعنة: ابتعد عنها!
+Karakterler	Characters	Personnages	Charaktere	Personajes	الشخصيات
+Skinler sadece görünüşü değiştirir, güç vermez.	Skins only change the look, never the power.	Les skins changent seulement l'apparence, jamais la puissance.	Skins ändern nur das Aussehen, nie die Stärke.	Los aspectos solo cambian el look, nunca el poder.	الأشكال تغيّر المظهر فقط ولا تمنح قوة.
+🗺 Macera	🗺 Adventure	🗺 Aventure	🗺 Abenteuer	🗺 Aventura	🗺 المغامرة
+<b>1.</b> Canavarları patlat	<b>1.</b> Blast the monsters	<b>1.</b> Fais sauter les monstres	<b>1.</b> Monster sprengen	<b>1.</b> Vuela a los monstruos	<b>1.</b> فجّر الوحوش
+<b>2.</b> Tuğlaların altındaki kapıyı bul	<b>2.</b> Find the door under a brick	<b>2.</b> Trouve la porte sous une brique	<b>2.</b> Finde die Tür unter einem Ziegel	<b>2.</b> Encuentra la puerta bajo un ladrillo	<b>2.</b> جد الباب تحت الطوب
+<b>3.</b> Kapıya gir	<b>3.</b> Walk into the door	<b>3.</b> Entre par la porte	<b>3.</b> Geh durch die Tür	<b>3.</b> Entra por la puerta	<b>3.</b> ادخل الباب
+Canavara <b>dokunursan</b> yanarsın. Kapı, bütün canavarlar bitince açılır.	<b>Touching</b> a monster knocks you out. The door opens once all monsters are gone.	Si tu <b>touches</b> un monstre, tu perds. La porte s'ouvre quand tous les monstres ont disparu.	<b>Berührst</b> du ein Monster, bist du raus. Die Tür öffnet sich, wenn alle Monster weg sind.	Si <b>tocas</b> un monstruo, pierdes. La puerta se abre cuando no queda ninguno.	إذا <b>لمست</b> وحشًا تخسر. يُفتح الباب عندما تختفي كل الوحوش.
+Hızlı bitir: <b>★★★</b>. Yıldızlar yeni haritaları açar.	Finish fast for <b>★★★</b>. Stars open new maps.	Finis vite pour <b>★★★</b>. Les étoiles débloquent de nouvelles cartes.	Sei schnell für <b>★★★</b>. Sterne schalten neue Karten frei.	Termina rápido para <b>★★★</b>. Las estrellas abren mapas nuevos.	أنهِ بسرعة لتحصل على <b>★★★</b>. النجوم تفتح خرائط جديدة.
+5 harita, her birinde 25 bölüm.	5 maps with 25 levels each.	5 cartes de 25 niveaux chacune.	5 Karten mit je 25 Leveln.	5 mapas con 25 niveles cada uno.	5 خرائط في كل منها 25 مرحلة.
+⚔ Arena	⚔ Arena	⚔ Arène	⚔ Arena	⚔ Arena	⚔ الساحة
+⚔ Arena ve 🌐 Online	⚔ Arena and 🌐 Online	⚔ Arène et 🌐 En ligne	⚔ Arena und 🌐 Online	⚔ Arena y 🌐 Online	⚔ الساحة و🌐 عبر الإنترنت
+🌐 Online	🌐 Online	🌐 En ligne	🌐 Online	🌐 Online	🌐 عبر الإنترنت
+Online	Online	En ligne	Online	Online	عبر الإنترنت
+<b>4 oyuncu</b> köşelerden başlar. Tuğlaları kırıp güçlen, rakiplerini bombayla sıkıştır.	<b>4 players</b> start in the corners. Break bricks, power up and trap your rivals.	<b>4 joueurs</b> partent des coins. Casse des briques, deviens plus fort et coince tes rivaux.	<b>4 Spieler</b> starten in den Ecken. Zerbrich Ziegel, werd stärker und kessel deine Gegner ein.	<b>4 jugadores</b> empiezan en las esquinas. Rompe ladrillos, hazte fuerte y atrapa a tus rivales.	<b>4 لاعبين</b> يبدؤون من الزوايا. اكسر الطوب وتقوَّ وحاصر منافسيك.
+Son ayakta kalan <b>raundu</b> alır. <b>3 raunt</b> alan maçı kazanır.	Last one standing takes the <b>round</b>. First to <b>3 rounds</b> wins.	Le dernier debout gagne la <b>manche</b>. Le premier à <b>3 manches</b> l'emporte.	Wer zuletzt steht, holt die <b>Runde</b>. Wer zuerst <b>3 Runden</b> hat, gewinnt.	El último en pie gana la <b>ronda</b>. Quien gane <b>3 rondas</b> vence.	آخر من يبقى يربح <b>الجولة</b>. من يربح <b>3 جولات</b> يفوز.
+2 dakika sonra alan <b>kenarlardan daralır</b>.	After 2 minutes the arena <b>closes in</b>.	Après 2 minutes, l'arène <b>rétrécit par les bords</b>.	Nach 2 Minuten <b>schrumpft</b> die Arena von den Rändern.	A los 2 minutos la arena <b>se cierra por los bordes</b>.	بعد دقيقتين <b>تضيق الساحة من الأطراف</b>.
+Online: hızlı eşleş ya da arkadaşlarınla aynı oda kodunu gir.	Online: quick match, or share a room code with friends.	En ligne : match rapide ou même code de salle avec tes amis.	Online: Schnelles Spiel oder denselben Raumcode mit Freunden eingeben.	Online: partida rápida o el mismo código de sala con tus amigos.	عبر الإنترنت: مباراة سريعة أو أدخل رمز الغرفة نفسه مع أصدقائك.
+🧩 Bulmaca	🧩 Puzzle	🧩 Puzzle	🧩 Rätsel	🧩 Puzle	🧩 لغز
+Hedef: bütün <b>altın kasaları</b> patlatmak.	Goal: blow up every <b>gold crate</b>.	But : faire exploser toutes les <b>caisses d'or</b>.	Ziel: alle <b>Goldkisten</b> sprengen.	Objetivo: volar todas las <b>cajas de oro</b>.	الهدف: تفجير كل <b>صناديق الذهب</b>.
+Bomban <b>sayılı</b>. Nereye koyacağını düşün.	You only get <b>a few bombs</b>. Think before you place.	Tes bombes sont <b>comptées</b>. Réfléchis avant de poser.	Deine Bomben sind <b>gezählt</b>. Denk nach, bevor du legst.	Tus bombas están <b>contadas</b>. Piensa antes de ponerlas.	قنابلك <b>معدودة</b>. فكّر قبل أن تضعها.
+<b>Mor bombalar</b> uyur. Patlama değince onlar da patlar: zincir kur.	<b>Purple bombs</b> sleep. A blast sets them off: build a chain.	Les <b>bombes violettes</b> dorment. Une explosion les déclenche : fais une chaîne.	<b>Lila Bomben</b> schlafen. Eine Explosion zündet sie: bau eine Kette.	Las <b>bombas moradas</b> duermen. Una explosión las activa: haz una cadena.	<b>القنابل البنفسجية</b> نائمة. الانفجار يشعلها: اصنع سلسلة.
+Haritalar	Maps	Cartes	Karten	Mapas	الخرائط
+💡 İpuçları	💡 Tips	💡 Astuces	💡 Tipps	💡 Consejos	💡 نصائح
+Bombayı koymadan önce kaçacağın yolu seç. Çıkmaz sokağa bomba bırakma.	Before dropping a bomb, pick your escape route. Never bomb yourself into a dead end.	Avant de poser une bombe, choisis ta sortie. Ne te coince jamais dans une impasse.	Wähl vor dem Bombenlegen deinen Fluchtweg. Leg nie eine Bombe in eine Sackgasse.	Antes de poner una bomba, elige por dónde huir. Nunca te encierres en un callejón.	قبل وضع القنبلة اختر طريق الهرب. لا تضع قنبلة في طريق مسدود.
+Patlama menzilini büyüten güçleri topladıkça daha uzağa kaç.	The more range power-ups you collect, the farther you need to run.	Plus tu ramasses de bonus de portée, plus tu dois fuir loin.	Je mehr Reichweiten-Power-ups du hast, desto weiter musst du weglaufen.	Cuantos más potenciadores de alcance tengas, más lejos debes huir.	كلما جمعت معززات المدى ابتعد أكثر.
+Tekme gücüyle bombayı rakibe ya da canavara doğru it.	With the kick power-up, push a bomb toward a rival or a monster.	Avec le coup de pied, pousse une bombe vers un rival ou un monstre.	Mit dem Tritt-Power-up schiebst du Bomben auf Gegner oder Monster.	Con la patada, empuja una bomba hacia un rival o un monstruo.	بقوة الركلة ادفع القنبلة نحو منافس أو وحش.
+Kafatası (lanet) gücünü alma: 8 saniye boyunca seni yavaşlatır, yönleri ters çevirir, bomba koydurmaz ya da istemeden bomba bıraktırır.	Avoid the skull (curse): for 8 seconds it slows you, flips your controls, blocks your bombs or makes you drop them by accident.	Évite la tête de mort (malédiction) : pendant 8 secondes, elle te ralentit, inverse les commandes, bloque tes bombes ou t'en fait poser sans le vouloir.	Nimm nicht den Totenkopf (Fluch): 8 Sekunden lang macht er dich langsam, vertauscht die Steuerung, blockiert deine Bomben oder lässt dich ungewollt welche legen.	No cojas la calavera (maldición): durante 8 segundos te ralentiza, invierte los controles, te impide poner bombas o te hace soltarlas sin querer.	لا تأخذ الجمجمة (اللعنة): لمدة 8 ثوانٍ تبطئك أو تعكس الاتجاهات أو تمنعك من وضع القنابل أو تجعلك تضعها دون قصد.
+Bulmacada önce mor bombaları zincirle, sonra kendi bombalarını harca.	In puzzles, chain the purple bombs first, then spend your own bombs.	Dans les puzzles, enchaîne d'abord les bombes violettes, puis utilise les tiennes.	Bei Rätseln zuerst die lila Bomben verketten, dann die eigenen einsetzen.	En los puzles, encadena primero las bombas moradas y luego usa las tuyas.	في الألغاز اربط القنابل البنفسجية أولًا ثم استخدم قنابلك.
+Macerada 3 yıldız için hızlı ol ama acele edip kendi bombana yakalanma.	For 3 stars in Adventure, be quick, but do not rush into your own blast.	Pour 3 étoiles en Aventure, sois rapide sans foncer dans ta propre explosion.	Für 3 Sterne im Abenteuer sei schnell, aber lauf nicht in deine eigene Explosion.	Para 3 estrellas en Aventura sé rápido, pero no te metas en tu propia explosión.	للحصول على 3 نجوم في المغامرة كن سريعًا لكن لا تندفع نحو انفجارك.
+📺 Reklamlar	📺 Ads	📺 Publicités	📺 Werbung	📺 Anuncios	📺 الإعلانات
+Ödüllü reklamlar her zaman isteğe bağlıdır: izlersen ekstra tüy ya da ödül alırsın, izlemezsen oyun aynen devam eder.	Rewarded ads are always optional: watch one for extra feathers or a reward, or skip it and keep playing.	Les pubs récompensées sont toujours facultatives : regarde-en une pour des plumes ou un bonus, sinon le jeu continue normalement.	Belohnte Werbung ist immer freiwillig: Schau sie für Extra-Federn oder eine Belohnung, oder spiel einfach weiter.	Los anuncios con premio son siempre opcionales: míralos para conseguir plumas o premios, o sigue jugando sin más.	الإعلانات بمكافأة اختيارية دائمًا: شاهدها لتحصل على ريش أو مكافأة، أو تابع اللعب كالمعتاد.
+Maçların arasında arada bir kısa geçiş reklamı çıkar, oyunun ortasında asla çıkmaz.	A short ad sometimes appears between matches, never in the middle of a game.	Une courte pub apparaît parfois entre les matchs, jamais en pleine partie.	Zwischen Spielen kommt ab und zu kurze Werbung, nie mitten im Spiel.	A veces sale un anuncio corto entre partidas, nunca en mitad del juego.	يظهر أحيانًا إعلان قصير بين المباريات، ولا يظهر أبدًا أثناء اللعب.
+Mağazadaki Reklamları Kaldır paketi geçiş reklamlarını kapatır.	The Remove Ads pack in the shop turns off the in-between ads.	Le pack Supprimer les pubs de la boutique désactive les pubs entre les matchs.	Das Paket „Werbung entfernen“ im Shop schaltet die Werbung zwischen Spielen ab.	El pack Quitar anuncios de la tienda desactiva los anuncios entre partidas.	حزمة إزالة الإعلانات في المتجر توقف الإعلانات بين المباريات.
+🪶 Tüy, seviye, skinler	🪶 Feathers, level, skins	🪶 Plumes, niveau, skins	🪶 Federn, Level, Skins	🪶 Plumas, nivel, aspectos	🪶 الريش والمستوى والأشكال
+Her maç ve bölüm <b>tüy</b> ve <b>XP</b> kazandırır. XP seviyeni yükseltir.	Every match and level pays <b>feathers</b> and <b>XP</b>. XP raises your level.	Chaque match et chaque niveau rapporte des <b>plumes</b> et de l'<b>XP</b>. L'XP fait monter ton niveau.	Jedes Spiel und Level bringt <b>Federn</b> und <b>XP</b>. XP erhöht dein Level.	Cada partida y nivel da <b>plumas</b> y <b>XP</b>. La XP sube tu nivel.	كل مباراة ومرحلة تمنحك <b>ريشًا</b> و<b>خبرة</b>. الخبرة ترفع مستواك.
+Tüyle <b>yeni karakter</b>, <b>skin</b>, <b>harita</b> ve <b>avatar parçası</b> alınır.	Feathers buy <b>characters</b>, <b>skins</b>, <b>maps</b> and <b>avatar items</b>.	Les plumes achètent des <b>personnages</b>, <b>skins</b>, <b>cartes</b> et <b>éléments d'avatar</b>.	Mit Federn kaufst du <b>Charaktere</b>, <b>Skins</b>, <b>Karten</b> und <b>Avatar-Teile</b>.	Con plumas compras <b>personajes</b>, <b>aspectos</b>, <b>mapas</b> y <b>piezas de avatar</b>.	بالريش تشتري <b>شخصيات</b> و<b>أشكالًا</b> و<b>خرائط</b> و<b>قطع صورة رمزية</b>.
+🎁 <b>Günlük ödülü</b> her gün topla, seri büyüdükçe ödül artar.	🎁 Claim the <b>daily reward</b> every day; the streak makes it grow.	🎁 Prends le <b>cadeau du jour</b> chaque jour ; la série le fait grandir.	🎁 Hol dir jeden Tag die <b>Tagesbelohnung</b>; die Serie lässt sie wachsen.	🎁 Coge el <b>premio diario</b> cada día; la racha lo hace crecer.	🎁 خذ <b>المكافأة اليومية</b> كل يوم، وتكبر مع السلسلة.
+Sol üstteki <b>profilden</b> avatarını ve ismini değiştir.	Change your avatar and name from the <b>profile</b> at the top left.	Change ton avatar et ton nom depuis le <b>profil</b> en haut à gauche.	Ändere Avatar und Namen im <b>Profil</b> oben links.	Cambia tu avatar y nombre desde el <b>perfil</b> de arriba a la izquierda.	غيّر صورتك واسمك من <b>الملف الشخصي</b> أعلى اليسار.
+Yeterli oyuncu bulunamadığında maçlar bilgisayarın yönettiği oyuncularla tamamlanır.	When there are not enough players around, matches are completed with computer-controlled players.	S'il n'y a pas assez de joueurs, les matchs sont complétés par des joueurs contrôlés par l'ordinateur.	Wenn nicht genug Spieler da sind, werden Spiele mit Computerspielern aufgefüllt.	Si no hay suficientes jugadores, las partidas se completan con jugadores controlados por el ordenador.	عند عدم توفر لاعبين كافين تُستكمل المباريات بلاعبين يتحكم بهم الكمبيوتر.
+Geri	Back	Retour	Zurück	Atrás	رجوع
+TAMAM	GOT IT	COMPRIS	VERSTANDEN	ENTENDIDO	فهمت
+İLERİ	NEXT	SUIVANT	WEITER	SIGUIENTE	التالي
+Altın	Gold	Or	Gold	Oro	ذهبي
+Ateş	Fire	Feu	Feuer	Fuego	النار
+Sıradan	Common	Commun	Gewöhnlich	Común	عادي
+Nadir	Rare	Rare	Selten	Raro	نادر
+Epik	Epic	Épique	Episch	Épico	ملحمي
+Efsanevi	Legendary	Légendaire	Legendär	Legendario	أسطوري
+Altın Kral	Golden King	Roi d'or	Goldkönig	Rey Dorado	الملك الذهبي
+Yeşil Çay	Green Tea	Thé vert	Grüner Tee	Té Verde	الشاي الأخضر
+Keşiş	Monk	Moine	Mönch	Monje	الراهب
+Ejder Usta	Dragon Master	Maître Dragon	Drachenmeister	Maestro Dragón	سيد التنين
+Altın İmparator	Golden Emperor	Empereur d'or	Goldener Kaiser	Emperador Dorado	الإمبراطور الذهبي
+Kırmızı Şimşek	Red Flash	Éclair rouge	Roter Blitz	Rayo Rojo	البرق الأحمر
+Yeşil Saha	Green Pitch	Terrain vert	Grünes Feld	Campo Verde	الملعب الأخضر
+Süper Kahraman	Superhero	Super-héros	Superheld	Superhéroe	البطل الخارق
+Boksör	Boxer	Boxeur	Boxer	Boxeador	الملاكم
+Yıldırım	Thunder	Tonnerre	Donner	Trueno	الصاعقة
+Çilek	Strawberry	Fraise	Erdbeere	Fresa	فراولة
+Rüzgâr Ninja	Wind Ninja	Ninja du vent	Windninja	Ninja del Viento	نينجا الريح
+Derin Mavi	Deep Blue	Bleu profond	Tiefblau	Azul Profundo	الأزرق العميق
+Kutup Işığı	Aurora	Aurore	Polarlicht	Aurora	الشفق القطبي
+Buz Ejderi	Ice Dragon	Dragon de glace	Eisdrache	Dragón de Hielo	تنين الجليد
+Çimen Adası	Grass Island	Île verte	Grasinsel	Isla de Hierba	جزيرة العشب
+Standart kurallar	Standard rules	Règles standard	Standardregeln	Reglas estándar	قواعد عادية
+Kar Vadisi	Snow Valley	Vallée enneigée	Schneetal	Valle Nevado	وادي الثلج
+Soğuk: fitil daha yavaş yanar	Cold: fuses burn slower	Froid : les mèches brûlent plus lentement	Kälte: Zündschnüre brennen langsamer	Frío: las mechas arden más despacio	برد: الفتيل يحترق أبطأ
+Çöl Vahası	Desert Oasis	Oasis du désert	Wüstenoase	Oasis del Desierto	واحة الصحراء
+Sıcak: alevler daha uzun kalır	Heat: flames linger longer	Chaleur : les flammes durent plus longtemps	Hitze: Flammen bleiben länger	Calor: las llamas duran más	حرارة: اللهب يبقى أطول
+Uzay Üssü	Space Base	Base spatiale	Raumbasis	Base Espacial	قاعدة الفضاء
+Düşük yerçekimi: herkes daha hızlı	Low gravity: everyone is faster	Faible gravité : tout le monde va plus vite	Geringe Schwerkraft: alle sind schneller	Baja gravedad: todos van más rápido	جاذبية منخفضة: الجميع أسرع
+Yanardağ	Volcano	Volcan	Vulkan	Volcán	البركان
+Kızgın: bombaların menzili +1	Scorching: bombs reach +1 tile	Brûlant : portée des bombes +1	Glühend: Bombenreichweite +1	Abrasador: alcance de bombas +1	لاهب: مدى القنابل +1
+Nasıl oynanır?	How to play?	Comment jouer ?	Wie spielt man?	¿Cómo se juega?	طريقة اللعب؟
+Nasıl oynanır	How to play	Comment jouer	So wird gespielt	Cómo jugar	طريقة اللعب
+Ayarlar	Settings	Réglages	Einstellungen	Ajustes	الإعدادات
+Yasal Bilgiler	Legal	Mentions légales	Rechtliches	Información legal	المعلومات القانونية
+Yasal	Legal	Légal	Rechtliches	Legal	قانوني
+sürükle	drag	glisse	ziehen	arrastra	اسحب
+yürü	to move	pour marcher	zum Laufen	para caminar	للمشي
+BOMBA	BOMB	BOMBE	BOMBE	BOMBA	قنبلة
+Menü	Menu	Menu	Menü	Menú	القائمة
+DEVAM	RESUME	REPRENDRE	WEITER	SEGUIR	متابعة
+Yeniden başla	Restart	Recommencer	Neu starten	Reiniciar	ابدأ من جديد
+Menüye dön	Leave to menu	Retour au menu	Zum Menü	Volver al menú	العودة للقائمة
+Ses efektleri	Sound effects	Effets sonores	Soundeffekte	Efectos de sonido	المؤثرات الصوتية
+Müzik	Music	Musique	Musik	Música	الموسيقى
+Aç	Open	Ouvrir	Öffnen	Abrir	فتح
+Hakkında	About	À propos	Über	Acerca de	حول
+KAPAT	CLOSE	FERMER	SCHLIESSEN	CERRAR	إغلاق
+Oyun modu	Game mode	Mode de jeu	Spielmodus	Modo de juego	طور اللعب
+4 kişilik maç. 3 raunt alan şampiyon.	4-player match. First to 3 rounds is the champion.	Match à 4. Le premier à 3 manches est champion.	Spiel zu viert. Wer zuerst 3 Runden holt, ist Champion.	Partida a 4. Quien gane 3 rondas es el campeón.	مباراة لأربعة لاعبين. من يربح 3 جولات هو البطل.
+Hızlı eşleş ya da arkadaşlarınla özel oda.	Quick match or a private room with friends.	Match rapide ou salle privée avec tes amis.	Schnelles Spiel oder privater Raum mit Freunden.	Partida rápida o sala privada con amigos.	مباراة سريعة أو غرفة خاصة مع الأصدقاء.
+HIZLI EŞLEŞ	QUICK MATCH	MATCH RAPIDE	SCHNELLES SPIEL	PARTIDA RÁPIDA	مباراة سريعة
+ya da arkadaşlarınla: herkes aynı oda kodunu yazsın	or play with friends: everyone types the same room code	ou avec tes amis : tout le monde tape le même code	oder mit Freunden: alle geben denselben Raumcode ein	o con amigos: que todos escriban el mismo código	أو مع أصدقائك: يكتب الجميع رمز الغرفة نفسه
+Oda kur	Create room	Créer une salle	Raum erstellen	Crear sala	أنشئ غرفة
+Katıl	Join	Rejoindre	Beitreten	Unirse	انضم
+Oda kodu:	Room code:	Code de salle :	Raumcode:	Código de sala:	رمز الغرفة:
+Oda sahibinin başlatması bekleniyor…	Waiting for the host to start…	En attente du lancement par l'hôte…	Warte, bis der Gastgeber startet…	Esperando a que el anfitrión empiece…	بانتظار أن يبدأ المضيف…
+SONRAKİ	NEXT	SUIVANT	WEITER	SIGUIENTE	التالي
+Vazgeç	Cancel	Annuler	Abbrechen	Cancelar	إلغاء
+Profil	Profile	Profil	Profil	Perfil	الملف الشخصي
+Kapat	Close	Fermer	Schließen	Cerrar	إغلاق
+Mağaza	Shop	Boutique	Shop	Tienda	المتجر
+Günlük ödül	Daily reward	Cadeau du jour	Tagesbelohnung	Premio diario	المكافأة اليومية
+🎬 Reklam izle, 2 katını al	🎬 Watch an ad, double it	🎬 Regarde une pub, double-le	🎬 Werbung ansehen, verdoppeln	🎬 Ve un anuncio y duplícalo	🎬 شاهد إعلانًا وضاعفها
+BAŞLA	START	COMMENCER	STARTEN	EMPEZAR	ابدأ
+Gerçek Flix oyuncakları	Real Flix toys	Les vrais jouets Flix	Echte Flix-Spielzeuge	Juguetes Flix de verdad	ألعاب Flix الحقيقية
+Sek sek, fiske, havada tut. flixtoysofficial.com	Kick it, flick it, keep it in the air. flixtoysofficial.com	Tape, pichenette, garde-la en l'air. flixtoysofficial.com	Kicken, schnipsen, in der Luft halten. flixtoysofficial.com	Patea, lanza, mantenlo en el aire. flixtoysofficial.com	اركلها، انقرها، أبقها في الهواء. flixtoysofficial.com
+Uzaktan Patlat	Remote Detonate	Détonation à distance	Fernzündung	Detonación remota	التفجير عن بُعد
+⚡ Uzaktan Patlat	⚡ Remote Detonate	⚡ Détonation à distance	⚡ Fernzündung	⚡ Detonación remota	⚡ التفجير عن بُعد
+Kendi bombalarını istediği an patlatır.	Sets off his own bombs whenever he wants.	Fait exploser ses bombes quand il veut.	Zündet seine Bomben, wann er will.	Hace estallar sus bombas cuando quiere.	يفجّر قنابله متى شاء.
+Dengeli kahraman	All-round hero	Héros polyvalent	Allrounder	Héroe equilibrado	بطل متوازن
+Usta Wu	Master Wu	Maître Wu	Meister Wu	Maestro Wu	المعلم وو
+Zen Kalkanı	Zen Shield	Bouclier zen	Zen-Schild	Escudo Zen	درع الزن
+3 saniye boyunca hiçbir patlama ona işlemez.	No blast can touch him for 3 seconds.	Aucune explosion ne le touche pendant 3 secondes.	3 Sekunden lang kann ihm keine Explosion etwas.	Ninguna explosión le afecta durante 3 segundos.	لا يؤثر فيه أي انفجار لمدة 3 ثوانٍ.
+Ağır ama güçlü	Slow but strong	Lent mais fort	Langsam, aber stark	Lento pero fuerte	بطيء لكنه قوي
+Süper Tekme	Super Kick	Super coup de pied	Supertritt	Súper Patada	الركلة الخارقة
+Bombayı tekmeler, bomba duvara kadar kayar. Bombaya yürüyünce de iter.	Kicks a bomb and it slides until it hits a wall. Walking into a bomb pushes it too.	Shoote dans une bombe qui glisse jusqu'au mur. Il la pousse aussi en marchant dessus.	Tritt eine Bombe, die bis zur Wand rutscht. Läuft er gegen eine Bombe, schiebt er sie auch.	Patea una bomba y se desliza hasta chocar con un muro. Al caminar contra ella también la empuja.	يركل القنبلة فتنزلق حتى الجدار. ويدفعها أيضًا إذا مشى نحوها.
+Bomba tekmecisi	Bomb kicker	Tireur de bombes	Bombenkicker	Pateador de bombas	راكل القنابل
+Fiske Atılışı	Flick Dash	Ruée Flick	Flick-Sprint	Embestida Flick	اندفاعة فليك
+Baktığı yöne 3 kare fırlar, bombaların üstünden geçer.	Dashes 3 tiles the way he faces, right over bombs.	Bondit de 3 cases devant lui, par-dessus les bombes.	Springt 3 Felder in Blickrichtung, direkt über Bomben.	Salta 3 casillas hacia donde mira, por encima de las bombas.	يندفع 3 مربعات في اتجاه نظره فوق القنابل.
+En hızlısı	The fastest	Le plus rapide	Der Schnellste	El más rápido	الأسرع
+Buzul Flix	Frost Flix	Flix Givre	Frost-Flix	Flix Glacial	Flix الجليدي
+Dondur	Freeze	Gel	Einfrieren	Congelar	تجميد
+Yakındaki rakipleri 2,5 saniye dondurur.	Freezes nearby rivals for 2.5 seconds.	Gèle les rivaux proches pendant 2,5 secondes.	Friert Gegner in der Nähe 2,5 Sekunden ein.	Congela a los rivales cercanos durante 2,5 segundos.	يجمّد المنافسين القريبين لمدة 2.5 ثانية.
+Soğukkanlı	Cool-headed	Sang-froid	Cool im Kopf	Sangre fría	هادئ الأعصاب
+İsim	Name	Nom	Name	Nombre	الاسم

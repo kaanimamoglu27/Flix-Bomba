@@ -63,7 +63,7 @@ function renderHome() {
   $('tuyN').textContent = fmtN(SV.tuy); $('dayBtn').classList.toggle('dot', dailyState().can);
   $('mMac').textContent = (SV.mac || 0) >= MAC_LEVELS ? T('Hepsi tamam · ', 'All done · ') + MAC_LEVELS + T(' bölüm', ' levels') : T('Bölüm ', 'Level ') + ((SV.mac || 0) + 1) + ' / ' + MAC_LEVELS + T(' · canavarları patlat, kapıyı bul, çık', ' · blast monsters, find the door, exit');
   $('mBul').textContent = (SV.bul || 0) >= PUZ.length ? T('Hepsi tamam · ', 'All done · ') + PUZ.length + T(' bulmaca', ' puzzles') : T('Bulmaca ', 'Puzzle ') + ((SV.bul || 0) + 1) + ' / ' + PUZ.length + T(' · sınırlı bombayla çöz', ' · solve with limited bombs');
-  $('sSound').textContent = SV.sound ? T('Açık', 'On') : T('Kapalı', 'Off'); $('sMusic').textContent = SV.music ? T('Açık', 'On') : T('Kapalı', 'Off'); $('sLang').textContent = SV.lang === 'en' ? 'English' : 'Türkçe';
+  $('sSound').textContent = SV.sound ? T('Açık', 'On') : T('Kapalı', 'Off'); $('sMusic').textContent = SV.music ? T('Açık', 'On') : T('Kapalı', 'Off'); if ($('sLang')) $('sLang').textContent = SV.lang === 'en' ? 'English' : 'Türkçe';
   if (!stageCur || stageCur !== stageChars[ch.id]) showStageChar(ch.id);
 }
 function openLevels(m) {
@@ -123,7 +123,7 @@ $('howBtn').addEventListener('click', () => sheet('how', true)); $('setBtn').add
 document.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', () => sheet(b.dataset.close, false)));
 $('tSound').addEventListener('click', () => { SV.sound = !SV.sound; save(); renderHome(); AUD.play('ui'); });
 $('tMusic').addEventListener('click', () => { SV.music = !SV.music; save(); renderHome(); AUD.music(SV.music ? 'menu' : null); AUD.want = 'menu'; });
-$('tLang').addEventListener('click', () => { SV.lang = SV.lang === 'en' ? 'tr' : 'en'; save(); AUD.play('ui'); applyLang(); renderHome(); });
+if ($('tLang')) $('tLang').addEventListener('click', () => { SV.lang = SV.lang === 'en' ? 'tr' : 'en'; save(); AUD.play('ui'); applyLang(); renderHome(); });
 // online lobby
 async function joinRoom(code) { $('lobErr').textContent = T('Bağlanıyor…', 'Connecting…'); const ok = await NET.open(code); if (!ok) { $('lobErr').textContent = NET.err; return; } $('lobErr').textContent = ''; $('lobJoin').hidden = true; $('lobRoom').hidden = false; renderLobby(); }
 $('lobGo').addEventListener('click', () => { const c = $('lobInput').value.trim(); if (c.length < 3) { $('lobErr').textContent = T('En az 3 haneli bir kod yaz.', 'Type a code with at least 3 characters.'); return; } joinRoom(c); });

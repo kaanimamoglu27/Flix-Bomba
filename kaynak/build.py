@@ -24,6 +24,9 @@ assert 'jsdelivr' not in h and 'googleapis' not in h
 assert not h.lstrip().lower().startswith('<!doctype')
 head='<!doctype html>\n<html lang="tr"><head><meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">\n<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="theme-color" content="#1f9ee8"><meta name="format-detection" content="telephone=no">\n'
 h=head+h
+# FLIX i18n (6 languages): ../i18n/flix-i18n.js + the translation table, right after the head metas (check_page reads the first 600 bytes)
+sys.path.insert(0,os.path.join('..','i18n')); import apply_i18n
+blk,_=apply_i18n.block(); h=h.replace(head,head+blk+'\n',1)
 out=out or 'flix-bomba.html'
 open(out,'w',encoding='utf-8').write(h); print(out,len(h))
 import subprocess; subprocess.run([sys.executable,'check_page.py',out],check=True)   # fail the build if the page is not app-safe

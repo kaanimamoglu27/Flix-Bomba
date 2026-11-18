@@ -1,5 +1,13 @@
 # Flix Bomba (v1.3)
 
+
+**6 dil, ipuçları, reklam aralığı (2026-11-18):**
+- Diller: Türkçe (varsayılan, cihaz dili ne olursa olsun), English (oyunun kendi İngilizcesi), Français, Deutsch, Español, العربية. Ayarlar'daki eski TR/EN düğmesi yerine 6 dilli seçici. Daha önce İngilizce oynayanın seçimi korunur.
+- Çeviri: `i18n/ceviri_*.tsv` (Türkçe metin anahtar). `T(tr, en)` fr/de/es/ar'da metni bu tablodan alır, kalanları `i18n/flix-i18n.js` ekranda çevirir. `kaynak/build.py` dil katmanını sayfaya kendisi ekler; tabloya satır ekleyip `python3 kaynak/build.py index.html` yeter.
+- Nasıl Oynanır'a 2 sayfa: 💡 İpuçları ve 📺 Reklamlar.
+- Hata: Macera ipucu "20 bölüm" diyordu, her haritada 25 bölüm var.
+- Reklam: geçiş reklamları arasında (ve açılıştan sonra) en az 2 dakika; önceden kısa bulmaca denemelerinde her 3 denemede bir çıkabiliyordu.
+- Kaynak değişiklikleri meta.js, ui12.js, ui13.js, body12.html'de; `patch12.py` → `game_v12.js`/`shell_v12.html` kopyası → `patch13.py` → `build.py` ile üretildi.
 **Satın alma düzeltmesi (2026-11-17):** ödeme ekranı açılır açılmaz kalıcı ürün veriliyordu, ödemeyi kapatsan bile kalıyordu. cordova-plugin-purchase ödeme ekranı açıkken geçici bir "virtual" işlem oluşturuyor ve `store.owned()` onu sahip olunmuş sayıyor. `native-bridge.js` artık sadece gerçek, onaylanmış ya da bitmiş işlemlere bakıyor (`realOwned`).
 3D bomba-labirent oyunu. Tek dosya: `index.html` (kaynaklar `kaynak/`). Önceki sürümler: `v14.html`, `v131.html`, `v12.html`, `v11.html`, `v1.html`. App Store görselleri ve ikon: `store/`. iOS paketi: `app/` (Capacitor, kök `index.html` ve `store/icon-1024.png` dosyalarını kullanır).
 
